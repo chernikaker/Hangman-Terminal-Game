@@ -44,5 +44,24 @@ public class Dictionary {
             .add(word);
     }
 
+    private String generateCategory(){
+        int categoryIndex = random.nextInt(dictionary.size());
+        return dictionary.keySet().toArray()[categoryIndex].toString();
+    }
+
+    private int generateDifficulty(String category){
+
+        int difficultyIndex = random.nextInt(dictionary.get(category).size());
+        return (int) dictionary.get(category).keySet().toArray()[difficultyIndex];
+    }
+
+    public Word getWord(String category, int difficulty){
+
+        if(category.isEmpty()) category = generateCategory();
+        if(difficulty==0) difficulty = generateDifficulty(category);
+        int wordIndex = random.nextInt(dictionary.get(category).get(difficulty).size());
+        return dictionary.get(category).get(difficulty).get(wordIndex);
+    }
+
 
 }
