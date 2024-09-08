@@ -1,14 +1,4 @@
 package backend.academy.game;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
-@Getter
-@AllArgsConstructor
-public class Word {
-
-    private String word;
-    private int difficulty;
-    private String category;
-
-}
+public record Word (String word, int difficulty, String category) {}
