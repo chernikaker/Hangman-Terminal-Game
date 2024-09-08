@@ -21,16 +21,18 @@ public class GameContext {
     }
 
     public boolean processLetter(char letter) {
-        if (processedLetters.contains(letter)) {
+
+        char exactLetter = Character.toLowerCase(letter);
+        if (processedLetters.contains(exactLetter)) {
             return false;
         }
-        processedLetters.add(letter);
-        if (answer.indexOf(letter) == -1) {
+        processedLetters.add(exactLetter);
+        if (answer.indexOf(exactLetter) == -1) {
             mistakes++;
         } else {
             for (int i = 0; i < answer.length(); i++) {
-                if (answer.charAt(i) == letter) {
-                    currentAnswer[i] = letter;
+                if (answer.charAt(i) == exactLetter) {
+                    currentAnswer[i] = exactLetter;
                 }
             }
         }
