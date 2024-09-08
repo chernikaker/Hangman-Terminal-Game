@@ -11,7 +11,8 @@ public class Dictionary {
     private final Map<String, Map<Integer, List<Word>>> dictionary = new HashMap<>();
     private final SecureRandom random = new SecureRandom();
 
-    public Dictionary() {
+
+    public void generateDefaultDictionary() {
 
         addWord(new Word("apple", 1, "fruits"));
         addWord(new Word("orange", 1, "fruits"));
@@ -34,7 +35,6 @@ public class Dictionary {
         addWord(new Word("armadillo", 3, "animals"));
         addWord(new Word("hippopotamus", 3, "animals"));
         addWord(new Word("squirrel", 3, "animals"));
-
     }
 
     private void addWord(Word word) {
@@ -44,24 +44,38 @@ public class Dictionary {
             .add(word);
     }
 
-    private String generateCategory(){
+    private String generateCategory() {
         int categoryIndex = random.nextInt(dictionary.size());
         return dictionary.keySet().toArray()[categoryIndex].toString();
     }
 
-    private int generateDifficulty(String category){
+    private int generateDifficulty(String category) {
 
         int difficultyIndex = random.nextInt(dictionary.get(category).size());
         return (int) dictionary.get(category).keySet().toArray()[difficultyIndex];
     }
 
-    public Word getWord(String category, int difficulty){
+    public Word getWord(String category, int difficulty) {
 
-        if(category.isEmpty()) category = generateCategory();
-        if(difficulty==0) difficulty = generateDifficulty(category);
-        int wordIndex = random.nextInt(dictionary.get(category).get(difficulty).size());
-        return dictionary.get(category).get(difficulty).get(wordIndex);
+        String wordCategory = category.isEmpty() ? generateCategory() : category;
+        int wordDifficulty = difficulty == 0 ? generateDifficulty(wordCategory) : difficulty;
+
+        int wordIndex = random.nextInt(dictionary.get(wordCategory).get(wordDifficulty).size());
+        return dictionary.get(wordCategory).get(wordDifficulty).get(wordIndex);
     }
 
+    public boolean containsCategory(String category) {
+        return dictionary.containsKey(category);
+    }
+
+    public boolean containsDifficulty(String category, int difficulty) {
+        return dictionary.get(category).containsKey(difficulty);
+    }
+
+    public boolean containsWord(Word word) {
+        return dictionary.containsKey(word.category())
+            && dictionary.get(word.category()).containsKey(word.difficulty())
+            && dictionary.get(word.category()).get(word.difficulty()).contains(word);
+    }
 
 }
