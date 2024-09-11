@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import lombok.Getter;
+
 
 public class GameContext {
 
@@ -11,16 +13,19 @@ public class GameContext {
     private final int MAX_MISTAKES;
     private int mistakes = 0;
 
+    @Getter
     private final String answer;
     private final char[] currentAnswer;
     private final Set<Character> processedLetters = new HashSet<>();
 
-
-    public String getAnswer() {
-        return answer;
-    }
-
     public GameContext(int maxMistakes, String word) {
+        if (maxMistakes < 1) {
+            throw new IllegalArgumentException("Amount of mistakes must be at least 1");
+        }
+        if (word.isEmpty()) {
+            throw new IllegalArgumentException("Word cannot be empty");
+        }
+
         MAX_MISTAKES = maxMistakes;
         answer = word;
         currentAnswer = new char[word.length()];
@@ -36,7 +41,7 @@ public class GameContext {
     }
 
     public int getRemainingAttempts() {
-        return MAX_MISTAKES-mistakes;
+        return MAX_MISTAKES - mistakes;
     }
 
     public boolean processLetter(char letter) {
