@@ -37,19 +37,19 @@ public class Dictionary {
         addWord(new Word("squirrel", 3, "animals"));
     }
 
-    private void addWord(Word word) {
+    public void addWord(Word word) {
         dictionary
-            .computeIfAbsent(word.category(), _ -> new HashMap<>())
-            .computeIfAbsent(word.difficulty(), _ -> new ArrayList<>())
+            .computeIfAbsent(word.category(), k -> new HashMap<>())
+            .computeIfAbsent(word.difficulty(), k -> new ArrayList<>())
             .add(word);
     }
 
-    private String generateCategory() {
+    public String generateCategory() {
         int categoryIndex = random.nextInt(dictionary.size());
         return dictionary.keySet().toArray()[categoryIndex].toString();
     }
 
-    private int generateDifficulty(String category) {
+    public int generateDifficulty(String category) {
 
         int difficultyIndex = random.nextInt(dictionary.get(category).size());
         return (int) dictionary.get(category).keySet().toArray()[difficultyIndex];
@@ -57,13 +57,17 @@ public class Dictionary {
 
     public Word getWord(String category, int difficulty) {
 
-        String wordCategory = category.isEmpty() ? generateCategory() : category;
-        int wordDifficulty = difficulty == 0 ? generateDifficulty(wordCategory) : difficulty;
-
-        int wordIndex = random.nextInt(dictionary.get(wordCategory).get(wordDifficulty).size());
-        return dictionary.get(wordCategory).get(wordDifficulty).get(wordIndex);
+        if (!dictionary.containsKey(category)) {
+            throw new IllegalArgumentException("Category " + category + " does not exist");
+        }
+        if (!dictionary.get(category).containsKey(difficulty)) {
+            throw new IllegalArgumentException(
+                "Difficulty " + difficulty + " does not exist in category" + category);
+        }
+        int wordIndex = random.nextInt(dictionary.get(category).get(difficulty).size());
+        return dictionary.get(category).get(difficulty).get(wordIndex);
     }
-    
+
     public boolean containsWord(Word word) {
         return dictionary.containsKey(word.category())
             && dictionary.get(word.category()).containsKey(word.difficulty())
