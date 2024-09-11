@@ -39,8 +39,8 @@ public class Dictionary {
 
     private void addWord(Word word) {
         dictionary
-            .computeIfAbsent(word.category(), k -> new HashMap<>())
-            .computeIfAbsent(word.difficulty(), k -> new ArrayList<>())
+            .computeIfAbsent(word.category(), _ -> new HashMap<>())
+            .computeIfAbsent(word.difficulty(), _ -> new ArrayList<>())
             .add(word);
     }
 
@@ -63,15 +63,7 @@ public class Dictionary {
         int wordIndex = random.nextInt(dictionary.get(wordCategory).get(wordDifficulty).size());
         return dictionary.get(wordCategory).get(wordDifficulty).get(wordIndex);
     }
-
-    public boolean containsCategory(String category) {
-        return dictionary.containsKey(category);
-    }
-
-    public boolean containsDifficulty(String category, int difficulty) {
-        return dictionary.get(category).containsKey(difficulty);
-    }
-
+    
     public boolean containsWord(Word word) {
         return dictionary.containsKey(word.category())
             && dictionary.get(word.category()).containsKey(word.difficulty())
