@@ -62,7 +62,7 @@ public class Dictionary {
         }
         if (!dictionary.get(category).containsKey(difficulty)) {
             throw new IllegalArgumentException(
-                "Difficulty " + difficulty + " does not exist in category" + category);
+                "Difficulty " + difficulty + " does not exist in category " + category);
         }
         int wordIndex = random.nextInt(dictionary.get(category).get(difficulty).size());
         return dictionary.get(category).get(difficulty).get(wordIndex);

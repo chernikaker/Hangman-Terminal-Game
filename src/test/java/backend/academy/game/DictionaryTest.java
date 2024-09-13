@@ -66,7 +66,7 @@ public class DictionaryTest {
         public void IncorrectDifficulty() {
             assertThatThrownBy(()->dict.getWord("fruits",5))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Difficulty 5 does not exist");
+                .hasMessage("Difficulty 5 does not exist in category fruits");
         }
 
     }
