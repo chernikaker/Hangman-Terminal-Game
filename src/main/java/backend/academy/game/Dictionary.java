@@ -11,7 +11,7 @@ public class Dictionary {
     private final Map<String, Map<Integer, List<Word>>> dictionary = new HashMap<>();
     private final SecureRandom random = new SecureRandom();
 
-
+    @SuppressWarnings({"MagicNumber", "MultipleStringLiterals"})
     public void generateDefaultDictionary() {
 
         addWord(new Word("apple", 1, "fruits"));

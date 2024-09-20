@@ -10,26 +10,56 @@ import lombok.Getter;
 public class GameContext {
 
     @SuppressWarnings("membername")
-    private final int MAX_MISTAKES;
+    private int MAX_MISTAKES = 0;
     private int mistakes = 0;
-
+    private String wordCategory = "";
+    private int wordDifficulty = 0;
     @Getter
-    private final String answer;
-    private final char[] currentAnswer;
+    private String answer = "";
+    private char[] currentAnswer = new char[MAX_MISTAKES];
     private final Set<Character> processedLetters = new HashSet<>();
 
-    public GameContext(int maxMistakes, String word) {
-        if (maxMistakes < 1) {
+
+    public void setMaxMistakes(int mistakes) {
+        if (mistakes < 1) {
             throw new IllegalArgumentException("Amount of mistakes must be at least 1");
         }
+        if (MAX_MISTAKES >= 1) {
+            throw new IllegalArgumentException("Max mistakes number has already been set");
+        }
+        this.MAX_MISTAKES = mistakes;
+    }
+
+    public void setAnswer(String word) {
         if (word.isEmpty()) {
             throw new IllegalArgumentException("Word cannot be empty");
         }
-
-        MAX_MISTAKES = maxMistakes;
+        if (!answer.isEmpty()) {
+            throw new IllegalArgumentException("Answer has already been set");
+        }
         answer = word;
         currentAnswer = new char[word.length()];
         Arrays.fill(currentAnswer, '_');
+    }
+
+    public void setWordCategory(String category) {
+        if (category.isEmpty()) {
+            throw new IllegalArgumentException("Word category cannot be empty");
+        }
+        if (!wordCategory.isEmpty()) {
+            throw new IllegalArgumentException("Word category has already been set");
+        }
+        this.wordCategory = category;
+    }
+
+    public void setWordDifficulty(int difficulty) {
+        if (difficulty < 1) {
+            throw new IllegalArgumentException("Word difficulty level must be at least 1");
+        }
+        if (wordDifficulty >= 1) {
+            throw new IllegalArgumentException("Word difficulty level has already been set");
+        }
+        this.wordDifficulty = difficulty;
     }
 
     public char[] getCurrentAnswer() {
@@ -46,12 +76,13 @@ public class GameContext {
 
     public boolean processLetter(char letter) {
 
+        String ans = String.valueOf(answer);
         char exactLetter = Character.toLowerCase(letter);
         if (processedLetters.contains(exactLetter)) {
             return false;
         }
         processedLetters.add(exactLetter);
-        if (answer.indexOf(exactLetter) == -1) {
+        if (ans.indexOf(exactLetter) == -1) {
             mistakes++;
         } else {
             for (int i = 0; i < answer.length(); i++) {
