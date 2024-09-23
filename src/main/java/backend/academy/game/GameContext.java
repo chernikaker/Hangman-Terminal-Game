@@ -10,12 +10,14 @@ import lombok.Getter;
 public class GameContext {
 
     @SuppressWarnings("membername")
-    private int MAX_MISTAKES = 0;
-    private int mistakes = 0;
     private String wordCategory = "";
     private int wordDifficulty = 0;
     @Getter
     private String answer = "";
+    @Getter
+    private int MAX_MISTAKES = 0;
+    @Getter
+    private int mistakes = 0;
     private char[] currentAnswer = new char[MAX_MISTAKES];
     private final Set<Character> processedLetters = new HashSet<>();
 
@@ -68,10 +70,6 @@ public class GameContext {
 
     public List<Character> getProcessedLetters() {
         return List.copyOf(processedLetters);
-    }
-
-    public int getRemainingAttempts() {
-        return MAX_MISTAKES - mistakes;
     }
 
     public boolean processLetter(char letter) {
