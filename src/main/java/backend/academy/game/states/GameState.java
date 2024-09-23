@@ -1,12 +1,14 @@
 package backend.academy.game.states;
 
+import backend.academy.game.visualizers.PlayerInterface;
+
 public interface GameState {
 
-    void viewScreen();
+    String viewScreen(PlayerInterface playerInterface);
 
-    GameState changeInterface();
+    GameState changeInterface(boolean inputProcessed);
 
-    boolean validateInput(String input);
+    boolean processInput(String input);
 
-    boolean changeContext();
+
 }

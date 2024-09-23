@@ -68,6 +68,14 @@ public class Dictionary {
         return dictionary.get(category).get(difficulty).get(wordIndex);
     }
 
+    public List<String> getCategories() {
+        return new ArrayList<>(dictionary.keySet());
+    }
+
+    public List<Integer> getDifficulties(String category) {
+        return new ArrayList<>(dictionary.get(category).keySet());
+    }
+
     public boolean containsWord(Word word) {
         return dictionary.containsKey(word.category())
             && dictionary.get(word.category()).containsKey(word.difficulty())

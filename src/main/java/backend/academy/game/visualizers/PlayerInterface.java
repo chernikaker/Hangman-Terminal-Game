@@ -101,17 +101,22 @@ public class PlayerInterface {
         int ropeCount = context.MAX_MISTAKES()-context.mistakes()>6 ?
             context.mistakes() : context.MAX_MISTAKES() - 6;
         int hangmanCount = context.MAX_MISTAKES()-context.mistakes()>6 ?
-            0 : context.MAX_MISTAKES()-context.mistakes();
+            0 : 6 - context.MAX_MISTAKES() + context.mistakes();
         for(int i=0;i<ropeCount;i++) {
             out.println("      |");
         }
         out.println(visualizer.getPart(hangmanCount));
         if (previousInvalidInput){
             out.println("Error: invalid input, enter one letter, which was not checked");
-            out.print("Checked letters: ");
-            for(char c : context.getProcessedLetters()) out.print(c+" ");
-            out.println();
         }
+        out.println("Category: "+context.wordCategory());
+        out.print("Checked letters: ");
+        for(char c : context.getProcessedLetters()) out.print(c+" ");
+        out.println();
+        out.println("Remaining attempts: "+(context.MAX_MISTAKES()-context.mistakes()));
+        out.println("CURRENT ANSWER");
+        for(char c : context.getCurrentAnswer()) out.print(c);
+        out.println();
         out.print("""
            ------
            Enter next letter:\s""");
