@@ -5,7 +5,7 @@ import backend.academy.game.GameContext;
 import backend.academy.game.Word;
 import backend.academy.game.visualizers.PlayerInterface;
 
-public class GameDifficultySettingState implements GameState{
+public class GameDifficultySettingState implements GameState {
 
     private final Dictionary dictionary;
     private final GameContext context;
@@ -18,15 +18,16 @@ public class GameDifficultySettingState implements GameState{
 
     @Override
     public String viewScreen(PlayerInterface playerInterface) {
-        playerInterface.viewSettingDifficultyScreen(dictionary.getDifficulties(context.wordCategory()),error);
+        playerInterface.viewSettingDifficultyScreen(dictionary.getDifficulties(context.wordCategory()), error);
         return playerInterface.getInput();
     }
 
     @Override
     public GameState changeState(boolean inputProcessed) {
 
-        if(inputProcessed) return new GamePlayingState(context);
-        else {
+        if (inputProcessed) {
+            return new GamePlayingState(context);
+        } else {
             error = true;
             return this;
         }
@@ -34,7 +35,6 @@ public class GameDifficultySettingState implements GameState{
 
     @Override
     public boolean processInput(String input) {
-        if (input == null) return false;
         try {
             int difficulty = Integer.parseInt(input);
             if (dictionary.getDifficulties(context.wordCategory()).contains(difficulty)) {
@@ -53,11 +53,12 @@ public class GameDifficultySettingState implements GameState{
         }
     }
 
-    private void setContext(){
+    @SuppressWarnings("magicnumber")
+    private void setContext() {
         Word answer = dictionary.getWord(context.wordCategory(), context.wordDifficulty());
         context.setAnswer(answer.word());
         // TODO: add constraints to word and difficulty in dictionary
-        int maxMistakes = Math.max(answer.word().length(),7)+3+5/ context.wordDifficulty();
+        int maxMistakes = 7 + 4 / context.wordDifficulty();
         context.setMaxMistakes(maxMistakes);
     }
 }

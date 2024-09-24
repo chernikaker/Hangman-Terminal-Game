@@ -11,17 +11,17 @@ import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
 @Slf4j
+@SuppressWarnings("magicnumber")
 public class PlayerInterface {
 
-    PrintStream out;
-    InputStream in;
+    private final PrintStream out;
 
-    final Scanner scanner;
-    final HangmanVisualizer visualizer = new HangmanVisualizer();
+    private final Scanner scanner;
+    private final HangmanVisualizer visualizer = new HangmanVisualizer();
+
 
     public PlayerInterface(PrintStream out, InputStream in) {
         this.out = out;
-        this.in = in;
         scanner = new Scanner(in, StandardCharsets.UTF_8);
     }
 
@@ -56,16 +56,19 @@ public class PlayerInterface {
              ▀▀▀ ▀ ▀ ▀▀▀ ▀▀▀ ▀▀▀ ▀▀▀   ▀▀▀ ▀ ▀  ▀  ▀▀▀ ▀▀▀ ▀▀▀ ▀ ▀  ▀
             """);
 
+        int categoryColumns = 3;
         for (int i = 0; i < categories.size(); i++) {
             out.printf("%-25s", categories.get(i));
-            if ((i + 1) % 3 == 0) {
+            if ((i + 1) % categoryColumns == 0) {
                 out.println();
             }
         }
-        if (categories.size() % 3 != 0) {
+        if (categories.size() % categoryColumns != 0) {
             out.println();
         }
-        if(previousInvalidInput) out.println("Error: no such category");
+        if (previousInvalidInput) {
+            out.println("Error: no such category");
+        }
         out.print("Enter one of the categories(leave empty to choose random): ");
 
     }
@@ -81,50 +84,58 @@ public class PlayerInterface {
               ▀▀▀ ▀▀▀  ▀  ▀▀▀ ▀▀▀
             """);
 
+        int difficultyColumns = 2;
         for (int i = 0; i < difficulties.size(); i++) {
-            out.printf("%-25s", difficulties.get(i));
-            if ((i + 1) % 2 == 0) {
+            out.printf("%-15s", difficulties.get(i));
+            if ((i + 1) % difficultyColumns == 0) {
                 out.println();
             }
         }
-        if (difficulties.size() % 2 != 0) {
+        if (difficulties.size() % difficultyColumns != 0) {
             out.println();
         }
-        if(previousInvalidInput) out.println("Error: no such difficulty level");
+        if (previousInvalidInput) {
+            out.println("Error: no such difficulty level");
+        }
         out.print("Enter one of the levels(leave empty to choose random): ");
 
     }
 
+
     public void viewHangmanScreen(GameContext context, boolean previousInvalidInput) {
         clearScreen();
         out.println("▀▀▀▀▀▀█▀▀▀▀▀▀");
-        int ropeCount = context.MAX_MISTAKES()-context.mistakes()>6 ?
-            context.mistakes() : context.MAX_MISTAKES() - 6;
-        int hangmanCount = context.MAX_MISTAKES()-context.mistakes()>6 ?
-            0 : 6 - context.MAX_MISTAKES() + context.mistakes();
-        for(int i=0;i<ropeCount;i++) {
+        int ropeCount = context.MAX_MISTAKES() - context.mistakes() > 6
+            ? context.mistakes() : context.MAX_MISTAKES() - 6;
+        int hangmanCount = context.MAX_MISTAKES() - context.mistakes() > 6
+            ? 0 : 6 - context.MAX_MISTAKES() + context.mistakes();
+        for (int i = 0; i < ropeCount; i++) {
             out.println("      |");
         }
         out.println(visualizer.getPart(hangmanCount));
-        if (previousInvalidInput){
+        if (previousInvalidInput) {
             out.println("Error: invalid input, enter one letter, which was not checked");
         }
-        out.println("Category: "+context.wordCategory());
         out.print("Checked letters: ");
-        for(char c : context.getProcessedLetters()) out.print(c+" ");
+        for (char c : context.getProcessedLetters()) {
+            out.print(c + " ");
+        }
         out.println();
-        out.println("Remaining attempts: "+(context.MAX_MISTAKES()-context.mistakes()));
+        out.println("Remaining attempts: " + (context.MAX_MISTAKES() - context.mistakes()));
         out.println("CURRENT ANSWER");
-        for(char c : context.getCurrentAnswer()) out.print(c);
+        for (char c : context.getCurrentAnswer()) {
+            out.print(c);
+        }
         out.println();
-        out.print("""
-           ------
-           Enter next letter:\s""");
+        out.print("Enter next letter: ");
     }
 
-    public void viewEndScreen(GameContext context){
-        if(context.mistakes()== context.MAX_MISTAKES()) out.println("You lost! Answer was:" +context.answer());
-        else out.println("You won!");
+    public void viewEndScreen(GameContext context) {
+        if (context.mistakes() == context.MAX_MISTAKES()) {
+            out.println("You lost! Answer was:" + context.answer());
+        } else {
+            out.println("You won!");
+        }
     }
 
     public void clearScreen() {

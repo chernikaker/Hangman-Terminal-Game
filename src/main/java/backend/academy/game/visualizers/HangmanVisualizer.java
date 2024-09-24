@@ -35,9 +35,9 @@ public class HangmanVisualizer {
             """
     );
 
-    public String getPart(int part){
+    public String getPart(int part) {
 
-        if(part<0||part>parts.size()){
+        if (part < 0 || part > parts.size()) {
             throw new IndexOutOfBoundsException("Invalid part number");
         }
         return parts.get(part);

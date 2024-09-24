@@ -9,7 +9,6 @@ import lombok.Getter;
 
 public class GameContext {
 
-    @SuppressWarnings("membername")
     //TODO change getter from default to making copies
     @Getter
     private String wordCategory = "";
@@ -18,6 +17,7 @@ public class GameContext {
     @Getter
     private String answer = "";
     @Getter
+    @SuppressWarnings("membername")
     private int MAX_MISTAKES = 0;
     @Getter
     private int mistakes = 0;

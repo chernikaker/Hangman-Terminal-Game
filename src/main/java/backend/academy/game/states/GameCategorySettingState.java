@@ -4,7 +4,7 @@ import backend.academy.game.Dictionary;
 import backend.academy.game.GameContext;
 import backend.academy.game.visualizers.PlayerInterface;
 
-public class GameCategorySettingState implements GameState{
+public class GameCategorySettingState implements GameState {
 
     private final Dictionary dictionary;
     private final GameContext context;
@@ -17,15 +17,16 @@ public class GameCategorySettingState implements GameState{
 
     @Override
     public String viewScreen(PlayerInterface playerInterface) {
-        playerInterface.viewSettingCategoryScreen(dictionary.getCategories(),error);
+        playerInterface.viewSettingCategoryScreen(dictionary.getCategories(), error);
         return playerInterface.getInput();
     }
 
     @Override
     public GameState changeState(boolean inputProcessed) {
 
-        if(inputProcessed) return new GameDifficultySettingState(dictionary,context);
-        else {
+        if (inputProcessed) {
+            return new GameDifficultySettingState(dictionary, context);
+        } else {
             error = true;
             return this;
         }
@@ -33,18 +34,18 @@ public class GameCategorySettingState implements GameState{
 
     @Override
     public boolean processInput(String input) {
-        if(input==null) return false;
+        if (input == null) {
+            return false;
+        }
         String processedInput = input.toLowerCase().trim();
-        if(dictionary.getCategories().contains(processedInput)){
+        if (dictionary.getCategories().contains(processedInput)) {
             context.setWordCategory(processedInput);
             return true;
         }
-        if(processedInput.isEmpty()) {
+        if (processedInput.isEmpty()) {
             context.setWordCategory(dictionary.generateCategory());
             return true;
         }
         return false;
     }
-
-
 }
