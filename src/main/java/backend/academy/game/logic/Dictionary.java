@@ -1,4 +1,4 @@
-package backend.academy.game;
+package backend.academy.game.logic;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;

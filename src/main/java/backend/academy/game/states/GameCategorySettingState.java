@@ -1,7 +1,7 @@
 package backend.academy.game.states;
 
-import backend.academy.game.Dictionary;
-import backend.academy.game.GameContext;
+import backend.academy.game.logic.Dictionary;
+import backend.academy.game.logic.GameContext;
 import backend.academy.game.validators.InputValidator;
 import backend.academy.game.visualizers.PlayerInterface;
 import java.util.Objects;

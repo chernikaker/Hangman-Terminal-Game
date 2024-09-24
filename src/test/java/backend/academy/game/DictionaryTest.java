@@ -1,5 +1,7 @@
 package backend.academy.game;
 
+import backend.academy.game.logic.Dictionary;
+import backend.academy.game.logic.Word;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.RepeatedTest;

@@ -1,6 +1,6 @@
 package backend.academy.game.states;
 
-import backend.academy.game.GameContext;
+import backend.academy.game.logic.GameContext;
 import backend.academy.game.visualizers.PlayerInterface;
 
 public class GameEndState implements GameState {

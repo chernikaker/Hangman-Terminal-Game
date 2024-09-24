@@ -1,6 +1,6 @@
 package backend.academy.game.visualizers;
 
-import backend.academy.game.GameContext;
+import backend.academy.game.logic.GameContext;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;

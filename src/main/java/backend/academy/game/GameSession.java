@@ -1,5 +1,7 @@
 package backend.academy.game;
 
+import backend.academy.game.logic.Dictionary;
+import backend.academy.game.logic.GameContext;
 import backend.academy.game.states.GameEndState;
 import backend.academy.game.states.GameStartState;
 import backend.academy.game.states.GameState;
