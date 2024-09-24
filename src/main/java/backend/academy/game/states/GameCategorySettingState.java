@@ -22,7 +22,7 @@ public class GameCategorySettingState implements GameState{
     }
 
     @Override
-    public GameState changeInterface(boolean inputProcessed) {
+    public GameState changeState(boolean inputProcessed) {
 
         if(inputProcessed) return new GameDifficultySettingState(dictionary,context);
         else {

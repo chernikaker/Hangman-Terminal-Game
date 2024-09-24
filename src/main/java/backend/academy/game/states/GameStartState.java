@@ -21,7 +21,7 @@ public class GameStartState implements GameState {
     }
 
     @Override
-    public GameState changeInterface(boolean inputProcessed) {
+    public GameState changeState(boolean inputProcessed) {
 
         return new GameCategorySettingState(dictionary, context);
     }

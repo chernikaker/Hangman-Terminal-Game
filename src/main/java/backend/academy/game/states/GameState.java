@@ -6,7 +6,7 @@ public interface GameState {
 
     String viewScreen(PlayerInterface playerInterface);
 
-    GameState changeInterface(boolean inputProcessed);
+    GameState changeState(boolean inputProcessed);
 
     boolean processInput(String input);
 

@@ -23,7 +23,7 @@ public class GameDifficultySettingState implements GameState{
     }
 
     @Override
-    public GameState changeInterface(boolean inputProcessed) {
+    public GameState changeState(boolean inputProcessed) {
 
         if(inputProcessed) return new GamePlayingState(context);
         else {

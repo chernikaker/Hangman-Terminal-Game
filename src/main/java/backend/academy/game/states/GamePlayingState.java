@@ -21,8 +21,12 @@ public class GamePlayingState implements GameState{
     }
 
     @Override
-    public GameState changeInterface(boolean inputProcessed) {
+    public GameState changeState(boolean inputProcessed) {
 
+        if(context.mistakes()==context.MAX_MISTAKES()
+            || context.answer().equals(new String(context.getCurrentAnswer()))){
+            return new GameEndState(context);
+        }
         error = !inputProcessed;
         return this;
     }
