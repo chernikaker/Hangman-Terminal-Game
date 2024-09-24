@@ -18,11 +18,19 @@ public class PlayerInterface {
 
     private final Scanner scanner;
     private final HangmanVisualizer visualizer = new HangmanVisualizer();
+    private final Terminal terminal;
 
 
     public PlayerInterface(PrintStream out, InputStream in) {
         this.out = out;
         scanner = new Scanner(in, StandardCharsets.UTF_8);
+
+        try {
+            terminal = TerminalBuilder.terminal();
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String getInput() {
@@ -104,15 +112,7 @@ public class PlayerInterface {
 
     public void viewHangmanScreen(GameContext context, boolean previousInvalidInput) {
         clearScreen();
-        out.println("▀▀▀▀▀▀█▀▀▀▀▀▀");
-        int ropeCount = context.MAX_MISTAKES() - context.mistakes() > 6
-            ? context.mistakes() : context.MAX_MISTAKES() - 6;
-        int hangmanCount = context.MAX_MISTAKES() - context.mistakes() > 6
-            ? 0 : 6 - context.MAX_MISTAKES() + context.mistakes();
-        for (int i = 0; i < ropeCount; i++) {
-            out.println("      |");
-        }
-        out.println(visualizer.getPart(hangmanCount));
+        drawHangman(context);
         if (previousInvalidInput) {
             out.println("Error: invalid input, enter one letter, which was not checked");
         }
@@ -131,18 +131,43 @@ public class PlayerInterface {
     }
 
     public void viewEndScreen(GameContext context) {
+        clearScreen();
         if (context.mistakes() == context.MAX_MISTAKES()) {
+            drawHangman(context);
             out.println("You lost! Answer was:" + context.answer());
         } else {
-            out.println("You won!");
+            out.println("""
+               \\O/
+                |
+               / \\""");
+            out.println("You won! Answer: " + context.answer());
         }
+    }
+
+    public void drawHangman(GameContext context) {
+        out.println("█▀▀▀▀▀█");
+        int ropeCount = context.MAX_MISTAKES() - context.mistakes() > 6
+            ? context.mistakes() : context.MAX_MISTAKES() - 6;
+        int hangmanCount = context.MAX_MISTAKES() - context.mistakes() > 6
+            ? 0 : 6 - context.MAX_MISTAKES() + context.mistakes();
+        for (int i = 0; i < ropeCount; i++) {
+            out.println("█     |");
+        }
+        out.println(visualizer.getPart(hangmanCount));
+        int remainingHeight = context.MAX_MISTAKES()-3-ropeCount- visualizer.getHeight(hangmanCount);
+        for (int i = 0; i < remainingHeight+1; i++) {
+            out.println("█");
+        }
+        out.println("----------");
     }
 
     public void clearScreen() {
         try {
-            Terminal terminal = TerminalBuilder.terminal();
-            terminal.puts(org.jline.utils.InfoCmp.Capability.clear_screen);
-            terminal.flush();
+            if (terminal != null) {
+                terminal.puts(org.jline.utils.InfoCmp.Capability.clear_screen);
+            } else {
+                log.warn("Terminal is not available, unable to clear screen.");
+            }
         } catch (Exception e) {
             log.error("An error occurred while clearing the screen: {}", e.getMessage());
         }
