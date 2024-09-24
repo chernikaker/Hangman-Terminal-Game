@@ -122,6 +122,11 @@ public class PlayerInterface {
            Enter next letter:\s""");
     }
 
+    public void viewEndScreen(GameContext context){
+        if(context.mistakes()== context.MAX_MISTAKES()) out.println("You lost! Answer was:" +context.answer());
+        else out.println("You won!");
+    }
+
     public void clearScreen() {
         try {
             Terminal terminal = TerminalBuilder.terminal();
