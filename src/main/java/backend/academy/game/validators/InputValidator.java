@@ -1,4 +1,4 @@
-package backend.academy.game;
+package backend.academy.game.validators;
 
 @FunctionalInterface
 public interface InputValidator {

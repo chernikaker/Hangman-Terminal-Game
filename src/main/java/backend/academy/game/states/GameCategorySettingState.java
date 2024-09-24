@@ -2,13 +2,18 @@ package backend.academy.game.states;
 
 import backend.academy.game.Dictionary;
 import backend.academy.game.GameContext;
+import backend.academy.game.validators.InputValidator;
 import backend.academy.game.visualizers.PlayerInterface;
+import java.util.Objects;
 
 public class GameCategorySettingState implements GameState {
 
     private final Dictionary dictionary;
     private final GameContext context;
     private boolean error = false;
+
+    private final InputValidator categoryValidator= (Objects::nonNull);
+
 
     public GameCategorySettingState(Dictionary d, GameContext ctx) {
         dictionary = d;
@@ -34,18 +39,15 @@ public class GameCategorySettingState implements GameState {
 
     @Override
     public boolean processInput(String input) {
-        if (input == null) {
-            return false;
-        }
-        String processedInput = input.toLowerCase().trim();
-        if (dictionary.getCategories().contains(processedInput)) {
-            context.setWordCategory(processedInput);
-            return true;
-        }
-        if (processedInput.isEmpty()) {
+       if(!categoryValidator.validate(input)) return false;
+
+       if (input.isBlank()) {
             context.setWordCategory(dictionary.generateCategory());
             return true;
-        }
-        return false;
+       } else if(dictionary.getCategories().contains(input.toLowerCase().trim())) {
+           context.setWordCategory(input.toLowerCase().trim());
+           return true;
+       }
+       return false;
     }
 }

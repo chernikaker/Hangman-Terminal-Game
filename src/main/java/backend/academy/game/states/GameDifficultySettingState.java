@@ -3,6 +3,7 @@ package backend.academy.game.states;
 import backend.academy.game.Dictionary;
 import backend.academy.game.GameContext;
 import backend.academy.game.Word;
+import backend.academy.game.validators.InputValidator;
 import backend.academy.game.visualizers.PlayerInterface;
 
 public class GameDifficultySettingState implements GameState {
@@ -11,9 +12,18 @@ public class GameDifficultySettingState implements GameState {
     private final GameContext context;
     private boolean error = false;
 
+    private final InputValidator difficultyValidator;
+
     public GameDifficultySettingState(Dictionary d, GameContext ctx) {
         dictionary = d;
         context = ctx;
+        difficultyValidator = (input -> {
+            try {
+                Integer.parseInt(input);
+                return true;
+            } catch (NumberFormatException e) {
+                return input.isBlank();
+            }});
     }
 
     @Override
@@ -35,22 +45,17 @@ public class GameDifficultySettingState implements GameState {
 
     @Override
     public boolean processInput(String input) {
-        try {
-            int difficulty = Integer.parseInt(input);
-            if (dictionary.getDifficulties(context.wordCategory()).contains(difficulty)) {
-                context.setWordDifficulty(difficulty);
-                setContext();
-                return true;
-            }
-            return false;
-        } catch (NumberFormatException e) {
-            if (input.isBlank()) {
-                context.setWordDifficulty(dictionary.generateDifficulty(context.wordCategory()));
-                setContext();
-                return true;
-            }
-            return false;
+        if (!difficultyValidator.validate(input)) return false;
+        if (input.isBlank()) {
+            context.setWordDifficulty(dictionary.generateDifficulty(context.wordCategory()));
+            setContext();
+            return true;
+        } else if(dictionary.getDifficulties(context.wordCategory()).contains(Integer.parseInt(input))) {
+            context.setWordDifficulty( Integer.parseInt(input));
+            setContext();
+            return true;
         }
+        return false;
     }
 
     @SuppressWarnings("magicnumber")

@@ -1,12 +1,20 @@
 package backend.academy.game.states;
 
 import backend.academy.game.GameContext;
+import backend.academy.game.validators.InputValidator;
 import backend.academy.game.visualizers.PlayerInterface;
 
 public class GamePlayingState implements GameState {
 
     private final GameContext context;
     private boolean error = false;
+
+    private final InputValidator letterValidator = ((input)->
+        input != null
+            && !input.isBlank()
+            && input.length() == 1
+            && Character.isAlphabetic(input.charAt(0)));
+
 
     public GamePlayingState(GameContext ctx) {
         context = ctx;
@@ -31,12 +39,8 @@ public class GamePlayingState implements GameState {
 
     @Override
     public boolean processInput(String input) {
-        if (input == null || input.isBlank() || input.length() > 1) {
-            return false;
-        }
-        if (!Character.isAlphabetic(input.charAt(0))) {
-            return false;
-        }
+        if(!letterValidator.validate(input)) return false;
+
         return context.processLetter(input.charAt(0));
     }
 
