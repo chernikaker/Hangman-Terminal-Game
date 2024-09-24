@@ -25,7 +25,7 @@ public class GameSession {
 
     public GameSession(InputStream in, PrintStream out) {
         id = getNextId();
-        dictionary.generateDefaultDictionary();
+        dictionary.fillDictionaryFromFile("src/main/resources/dict/data.txt");
         playerInterface = new PlayerInterface(out, in);
         state = new GameStartState(dictionary, context);
     }
