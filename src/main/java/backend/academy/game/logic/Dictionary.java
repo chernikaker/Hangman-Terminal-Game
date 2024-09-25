@@ -21,11 +21,19 @@ public class Dictionary {
     private final Map<String, Map<Integer, List<Word>>> dictionary = new HashMap<>();
     private final SecureRandom random = new SecureRandom();
     Logger log = Logger.getLogger("backend.academy.game.logic");
-    
+
 
     public void addWord(Word word) {
         if(word.difficulty()<1) {
             throw new InvalidWordException("word difficulty must be at least 1");
+        }
+
+        if(word.word() == null || word.word().isBlank()) {
+            throw new InvalidWordException("word is null or empty");
+        }
+
+        if(word.category() == null || word.category().isBlank()) {
+            throw new InvalidWordException("category is null or empty");
         }
 
         dictionary
@@ -49,9 +57,11 @@ public class Dictionary {
                     } catch (NumberFormatException e) {
                         log.warning("Error while parsing difficulty in line: " + line);
                         log.warning("Current word skipped");
+                    } catch (InvalidWordException e) {
+                        log.warning("Error while making word in line: " + line + ". " + e.getMessage());
                     }
                 } else {
-                    log.warning("Error while parsing line (too many params): " + line);
+                    log.warning("Error while parsing line (wrong params): " + line);
                     log.warning("Current line skipped");
                 }
             }
@@ -67,6 +77,9 @@ public class Dictionary {
 
     public int generateDifficulty(String category) {
 
+        if (!dictionary.containsKey(category)) {
+            throw new WordNotFoundException("category " + category + " does not exist");
+        }
         int difficultyIndex = random.nextInt(dictionary.get(category).size());
         return (int) dictionary.get(category).keySet().toArray()[difficultyIndex];
     }
