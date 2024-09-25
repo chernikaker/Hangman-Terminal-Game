@@ -4,12 +4,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import backend.academy.game.exceptions.FieldAlreadySetException;
 import lombok.Getter;
 
 
 public class GameContext {
 
-    //TODO change getter from default to making copies
     @Getter
     private String wordCategory = "";
     @Getter
@@ -17,11 +17,11 @@ public class GameContext {
     @Getter
     private String answer = "";
     @Getter
-    @SuppressWarnings("membername")
-    private int MAX_MISTAKES = 0;
+    private int maxMistakes = 0;
     @Getter
     private int mistakes = 0;
-    private char[] currentAnswer = new char[MAX_MISTAKES];
+
+    private char[] currentAnswer = new char[maxMistakes];
     private final Set<Character> processedLetters = new HashSet<>();
 
 
@@ -29,18 +29,18 @@ public class GameContext {
         if (mistakes < 1) {
             throw new IllegalArgumentException("Amount of mistakes must be at least 1");
         }
-        if (MAX_MISTAKES >= 1) {
-            throw new IllegalArgumentException("Max mistakes number has already been set");
+        if (maxMistakes >= 1) {
+            throw new FieldAlreadySetException("max mistakes number has already been set");
         }
-        this.MAX_MISTAKES = mistakes;
+        this.maxMistakes = mistakes;
     }
 
     public void setAnswer(String word) {
         if (word.isEmpty()) {
-            throw new IllegalArgumentException("Word cannot be empty");
+            throw new IllegalArgumentException("Word can not be empty");
         }
         if (!answer.isEmpty()) {
-            throw new IllegalArgumentException("Answer has already been set");
+            throw new FieldAlreadySetException("answer has already been set");
         }
         answer = word;
         currentAnswer = new char[word.length()];
@@ -52,7 +52,7 @@ public class GameContext {
             throw new IllegalArgumentException("Word category cannot be empty");
         }
         if (!wordCategory.isEmpty()) {
-            throw new IllegalArgumentException("Word category has already been set");
+            throw new FieldAlreadySetException("word category has already been set");
         }
         this.wordCategory = category;
     }
@@ -62,7 +62,7 @@ public class GameContext {
             throw new IllegalArgumentException("Word difficulty level must be at least 1");
         }
         if (wordDifficulty >= 1) {
-            throw new IllegalArgumentException("Word difficulty level has already been set");
+            throw new FieldAlreadySetException("word difficulty level has already been set");
         }
         this.wordDifficulty = difficulty;
     }

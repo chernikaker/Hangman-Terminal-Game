@@ -121,7 +121,7 @@ public class PlayerInterface {
             out.print(c + " ");
         }
         out.println();
-        out.println("Remaining attempts: " + (context.MAX_MISTAKES() - context.mistakes()));
+        out.println("Remaining attempts: " + (context.maxMistakes() - context.mistakes()));
         out.println("CURRENT ANSWER");
         for (char c : context.getCurrentAnswer()) {
             out.print(c);
@@ -132,7 +132,7 @@ public class PlayerInterface {
 
     public void viewEndScreen(GameContext context) {
         clearScreen();
-        if (context.mistakes() == context.MAX_MISTAKES()) {
+        if (context.mistakes() == context.maxMistakes()) {
             drawHangman(context);
             out.println("You lost! Answer was:" + context.answer());
         } else {
@@ -146,15 +146,15 @@ public class PlayerInterface {
 
     public void drawHangman(GameContext context) {
         out.println("█▀▀▀▀▀█");
-        int ropeCount = context.MAX_MISTAKES() - context.mistakes() > 6
-            ? context.mistakes() : context.MAX_MISTAKES() - 6;
-        int hangmanCount = context.MAX_MISTAKES() - context.mistakes() > 6
-            ? 0 : 6 - context.MAX_MISTAKES() + context.mistakes();
+        int ropeCount = context.maxMistakes() - context.mistakes() > 6
+            ? context.mistakes() : context.maxMistakes() - 6;
+        int hangmanCount = context.maxMistakes() - context.mistakes() > 6
+            ? 0 : 6 - context.maxMistakes() + context.mistakes();
         for (int i = 0; i < ropeCount; i++) {
             out.println("█     |");
         }
         out.println(visualizer.getPart(hangmanCount));
-        int remainingHeight = context.MAX_MISTAKES()-3-ropeCount- visualizer.getHeight(hangmanCount);
+        int remainingHeight = context.maxMistakes()-3-ropeCount- visualizer.getHeight(hangmanCount);
         for (int i = 0; i < remainingHeight+1; i++) {
             out.println("█");
         }

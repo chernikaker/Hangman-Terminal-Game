@@ -1,9 +1,7 @@
-package backend.academy.game;
+package backend.academy.game.logic;
 
 import backend.academy.game.exceptions.InvalidWordException;
 import backend.academy.game.exceptions.WordNotFoundException;
-import backend.academy.game.logic.Dictionary;
-import backend.academy.game.logic.Word;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.RepeatedTest;

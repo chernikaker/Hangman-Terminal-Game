@@ -1,22 +1,22 @@
 package backend.academy.game.exceptions;
 
-public class InvalidWordException extends GameException {
+public class FieldAlreadySetException extends GameException {
 
-    private final static String messagePart = "Error while adding word: ";
+    private final static String messagePart = "Can't change context: ";
 
-    public InvalidWordException(String message) {
+    public FieldAlreadySetException(String message) {
         super(messagePart + message);
     }
 
-    public InvalidWordException(String message, Throwable cause) {
+    public FieldAlreadySetException(String message, Throwable cause) {
         super(messagePart + message, cause);
     }
 
-    public InvalidWordException(Throwable cause) {
+    public FieldAlreadySetException(Throwable cause) {
         super(cause);
     }
 
-    public InvalidWordException(
+    public FieldAlreadySetException(
         String message,
         Throwable cause,
         boolean enableSuppression,
