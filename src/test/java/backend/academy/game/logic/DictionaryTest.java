@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -113,13 +114,14 @@ public class DictionaryTest {
             );
         }
 
-        @Test
-        public void InvalidDifficulty() {
+        @ParameterizedTest
+        @CsvSource({"0","6"})
+        public void InvalidDifficulty(int difficulty) {
 
-            Word word = new Word("lemon", 0, "fruits");
+            Word word = new Word("lemon", difficulty, "fruits");
             assertThatThrownBy(()->dict.addWord(word))
                 .isInstanceOf(InvalidWordException.class)
-                .hasMessage("Error while adding word: word difficulty must be at least 1");
+                .hasMessage("Error while adding word: word difficulty must be at least 1 and at most 5");
         }
 
         @ParameterizedTest
