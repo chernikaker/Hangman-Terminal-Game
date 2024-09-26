@@ -137,8 +137,7 @@ public class PlayerInterface {
         for (char c : context.getCurrentAnswer()) {
             out.print(c);
         }
-        out.println();
-        out.println("————————————————————");
+        out.println('\n');
         if (previousInvalidInput) {
             out.println("Error: invalid input, enter one letter, which was not checked. Try again!");
         }
