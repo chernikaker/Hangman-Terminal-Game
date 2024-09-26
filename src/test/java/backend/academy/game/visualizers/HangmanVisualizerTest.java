@@ -23,7 +23,7 @@ public class HangmanVisualizerTest {
     public void getPartIncorrectPartTest(int partNum) {
         assertThatThrownBy(() -> hangmanVisualizer.getPart(partNum))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("Invalid part number");
+            .hasMessage("Part number is out of range");
     }
 
     @ParameterizedTest
@@ -52,6 +52,6 @@ public class HangmanVisualizerTest {
     public void getHeightIncorrectPartTest(int partNum) {
         assertThatThrownBy(() -> hangmanVisualizer.getPart(partNum))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("Invalid part number");
+            .hasMessage("Part number is out of range");
     }
 }

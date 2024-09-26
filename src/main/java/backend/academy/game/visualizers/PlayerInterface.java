@@ -9,7 +9,7 @@ import java.util.Scanner;
 import lombok.extern.slf4j.Slf4j;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
-import static backend.academy.game.visualizers.HangmanVisualizer.hangmanSteps;
+import static backend.academy.game.visualizers.HangmanVisualizer.HANGMAN_STEPS;
 
 @Slf4j
 @SuppressWarnings("magicnumber")
@@ -19,17 +19,19 @@ public class PlayerInterface {
     private final Scanner scanner;
 
     private final HangmanVisualizer visualizer = new HangmanVisualizer();
-    private final Terminal terminal;
+    private Terminal terminal = null;
 
 
     public PlayerInterface(PrintStream out, InputStream in) {
         this.out = out;
         scanner = new Scanner(in, StandardCharsets.UTF_8);
+    }
+
+    public void createTerminal() {
         try {
             terminal = TerminalBuilder.terminal();
-        }
-        catch (Exception e) {
-            throw new RuntimeException("Terminal can't be created: " + e);
+        } catch (Exception e) {
+            throw new RuntimeException("Terminal can't be created: ", e);
         }
     }
 
@@ -165,17 +167,17 @@ public class PlayerInterface {
 
     public void drawHangman(GameContext context) {
         out.println("█▀▀▀▀▀█");
-        int ropeCount = context.maxMistakes() - context.mistakes() > hangmanSteps
-            ? context.mistakes() : context.maxMistakes() - hangmanSteps;
-        int hangmanCount = context.maxMistakes() - context.mistakes() > hangmanSteps
-            ? 0 : hangmanSteps - context.maxMistakes() + context.mistakes();
+        int ropeCount = context.maxMistakes() - context.mistakes() > HANGMAN_STEPS
+            ? context.mistakes() : context.maxMistakes() - HANGMAN_STEPS;
+        int hangmanCount = context.maxMistakes() - context.mistakes() > HANGMAN_STEPS
+            ? 0 : HANGMAN_STEPS - context.maxMistakes() + context.mistakes();
         for (int i = 0; i < ropeCount; i++) {
             out.println("█     |");
         }
         out.println(visualizer.getPart(hangmanCount));
-        int remainingHeight = context.maxMistakes()-3-ropeCount- visualizer.getHeight(hangmanCount);
-        for (int i = 0; i < remainingHeight+1; i++) {
-            out.println("█");
+        int remainingHeight = context.maxMistakes() - 3 - ropeCount - visualizer.getHeight(hangmanCount);
+        for (int i = 0; i < remainingHeight + 1; i++) {
+            out.println('█');
         }
         out.println("═════════════");
     }

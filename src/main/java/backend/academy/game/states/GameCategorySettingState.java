@@ -12,7 +12,7 @@ public class GameCategorySettingState implements GameState {
     private final GameContext context;
     private boolean error = false;
 
-    private final InputValidator categoryValidator= (Objects::nonNull);
+    private final InputValidator categoryValidator = (Objects::nonNull);
 
 
     public GameCategorySettingState(Dictionary d, GameContext ctx) {
@@ -39,12 +39,14 @@ public class GameCategorySettingState implements GameState {
 
     @Override
     public boolean processInput(String input) {
-       if(!categoryValidator.validate(input)) return false;
+       if (!categoryValidator.validate(input)) {
+           return false;
+       }
 
        if (input.isBlank()) {
             context.setWordCategory(dictionary.generateCategory());
             return true;
-       } else if(dictionary.getCategories().contains(input.toLowerCase().trim())) {
+       } else if (dictionary.getCategories().contains(input.toLowerCase().trim())) {
            context.setWordCategory(input.toLowerCase().trim());
            return true;
        }

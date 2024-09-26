@@ -9,7 +9,7 @@ public class GamePlayingState implements GameState {
     private final GameContext context;
     private boolean error = false;
 
-    private final InputValidator letterValidator = ((input)->
+    private final InputValidator letterValidator = ((input) ->
         input != null
             && !input.isBlank()
             && input.length() == 1
@@ -39,9 +39,10 @@ public class GamePlayingState implements GameState {
 
     @Override
     public boolean processInput(String input) {
-        if(!letterValidator.validate(input)) return false;
+        if (!letterValidator.validate(input)) {
+            return false;
+        }
 
         return context.processLetter(input.charAt(0));
     }
-
 }

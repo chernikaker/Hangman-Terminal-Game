@@ -27,6 +27,7 @@ public class GameSession {
         id = getNextId();
         dictionary.fillDictionaryFromFile("src/main/resources/dict/data.txt");
         playerInterface = new PlayerInterface(out, in);
+        playerInterface.createTerminal();
         state = new GameStartState(dictionary, context);
     }
 

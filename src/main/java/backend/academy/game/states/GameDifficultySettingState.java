@@ -24,7 +24,8 @@ public class GameDifficultySettingState implements GameState {
                 return true;
             } catch (NumberFormatException e) {
                 return input.isBlank();
-            }});
+            }
+        });
     }
 
     @Override
@@ -46,13 +47,15 @@ public class GameDifficultySettingState implements GameState {
 
     @Override
     public boolean processInput(String input) {
-        if (!difficultyValidator.validate(input)) return false;
-        if (input.isBlank()) {
-            context.setWordDifficulty(dictionary.generateDifficulty(context.wordCategory()));
-            setContext();
-            return true;
-        } else if(dictionary.getDifficulties(context.wordCategory()).contains(Integer.parseInt(input))) {
-            context.setWordDifficulty( Integer.parseInt(input));
+        if (!difficultyValidator.validate(input)) {
+            return false;
+        }
+        int difficulty = input.isBlank()
+            ? dictionary.generateDifficulty(context.wordCategory())
+            : Integer.parseInt(input);
+
+        if (dictionary.getDifficulties(context.wordCategory()).contains(difficulty)) {
+            context.setWordDifficulty(difficulty);
             setContext();
             return true;
         }
@@ -62,7 +65,7 @@ public class GameDifficultySettingState implements GameState {
     private void setContext() {
         Word answer = dictionary.getWord(context.wordCategory(), context.wordDifficulty());
         context.setAnswer(answer.word());
-        int maxMistakes = HangmanVisualizer.minAttempts + Dictionary.maxDifficulty - context.wordDifficulty();
+        int maxMistakes = HangmanVisualizer.MIN_ATTEMPTS + Dictionary.MAX_DIFFICULTY - context.wordDifficulty();
         context.setMaxMistakes(maxMistakes);
     }
 }

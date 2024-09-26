@@ -1,10 +1,10 @@
 package backend.academy.game.logic;
 
+import backend.academy.game.exceptions.FieldAlreadySetException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import backend.academy.game.exceptions.FieldAlreadySetException;
 import lombok.Getter;
 
 

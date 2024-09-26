@@ -1,15 +1,15 @@
 package backend.academy.game.exceptions;
 
-public class WordNotFoundException extends GameException{
+public class WordNotFoundException extends GameException {
 
-    private final static String messagePart = "Word can not be found: ";
+    private final static String MESSAGE_PART = "Word can not be found: ";
 
     public WordNotFoundException(String message) {
-        super(messagePart + message);
+        super(MESSAGE_PART + message);
     }
 
     public WordNotFoundException(String message, Throwable cause) {
-        super(messagePart + message, cause);
+        super(MESSAGE_PART + message, cause);
     }
 
     public WordNotFoundException(Throwable cause) {
@@ -22,6 +22,6 @@ public class WordNotFoundException extends GameException{
         boolean enableSuppression,
         boolean writableStackTrace
     ) {
-        super(messagePart + message, cause, enableSuppression, writableStackTrace);
+        super(MESSAGE_PART + message, cause, enableSuppression, writableStackTrace);
     }
 }
