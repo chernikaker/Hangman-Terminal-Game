@@ -4,6 +4,7 @@ import backend.academy.game.logic.Dictionary;
 import backend.academy.game.logic.GameContext;
 import backend.academy.game.logic.Word;
 import backend.academy.game.validators.InputValidator;
+import backend.academy.game.visualizers.HangmanVisualizer;
 import backend.academy.game.visualizers.PlayerInterface;
 
 public class GameDifficultySettingState implements GameState {
@@ -58,12 +59,10 @@ public class GameDifficultySettingState implements GameState {
         return false;
     }
 
-    @SuppressWarnings("magicnumber")
     private void setContext() {
         Word answer = dictionary.getWord(context.wordCategory(), context.wordDifficulty());
         context.setAnswer(answer.word());
-        // TODO: add constraints to word and difficulty in dictionary
-        int maxMistakes = 7 + 4 / context.wordDifficulty();
+        int maxMistakes = HangmanVisualizer.minAttempts + Dictionary.maxDifficulty - context.wordDifficulty();
         context.setMaxMistakes(maxMistakes);
     }
 }

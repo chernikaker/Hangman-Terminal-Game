@@ -4,6 +4,7 @@ import java.util.List;
 
 public class HangmanVisualizer {
 
+    public static final int minAttempts = 7;
     private final List<String> parts = List.of(
         "█",
 

@@ -11,21 +11,27 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
+import static java.util.function.Predicate.not;
 
 public class Dictionary {
 
+    public static final int maxDifficulty = 5;
     private final Map<String, Map<Integer, List<Word>>> dictionary = new HashMap<>();
     private final SecureRandom random = new SecureRandom();
     Logger log = Logger.getLogger("backend.academy.game.logic");
 
 
     public void addWord(Word word) {
-        if(word.difficulty()<1) {
-            throw new InvalidWordException("word difficulty must be at least 1");
+        if(word.difficulty()<1 || word.difficulty()>maxDifficulty) {
+            throw new InvalidWordException
+                ("word difficulty must be at least 1 and at most " + maxDifficulty);
         }
 
         if(word.word() == null || word.word().isBlank()) {
