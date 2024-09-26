@@ -25,7 +25,7 @@ public class GameDifficultySettingStateTest {
         @Test
         public void correctCategoryInput() {
             gameState = gameState.changeState(true);
-            assertSame(gameState.getClass(), GamePlayingStateTest.class);
+            assertSame(gameState.getClass(), GamePlayingState.class);
         }
 
         @Test
