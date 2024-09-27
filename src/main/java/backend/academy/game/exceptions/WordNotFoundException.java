@@ -7,21 +7,4 @@ public class WordNotFoundException extends GameException {
     public WordNotFoundException(String message) {
         super(MESSAGE_PART + message);
     }
-
-    public WordNotFoundException(String message, Throwable cause) {
-        super(MESSAGE_PART + message, cause);
-    }
-
-    public WordNotFoundException(Throwable cause) {
-        super(cause);
-    }
-
-    public WordNotFoundException(
-        String message,
-        Throwable cause,
-        boolean enableSuppression,
-        boolean writableStackTrace
-    ) {
-        super(MESSAGE_PART + message, cause, enableSuppression, writableStackTrace);
-    }
 }

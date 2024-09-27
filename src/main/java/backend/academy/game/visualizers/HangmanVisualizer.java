@@ -7,8 +7,7 @@ public class HangmanVisualizer {
     public static final int MIN_ATTEMPTS = 7;
     public static final int HANGMAN_STEPS = 6;
     public static final int STEPS_NOT_CHANGING_HEIGHT = 3;
-
-    private final List<String> parts = List.of(
+    private static final List<String> PARTS = List.of(
         "█",
 
         """
@@ -39,10 +38,10 @@ public class HangmanVisualizer {
 
     public String getPart(int part) {
 
-        if (part < 0 || part >= parts.size()) {
+        if (part < 0 || part >= PARTS.size()) {
             throw new IllegalArgumentException("Part number is out of range");
         }
-        return parts.get(part);
+        return PARTS.get(part);
     }
 
     @SuppressWarnings("magicnumber")

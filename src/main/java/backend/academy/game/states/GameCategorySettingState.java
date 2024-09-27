@@ -46,7 +46,8 @@ public class GameCategorySettingState implements GameState {
        if (input.isBlank()) {
             context.setWordCategory(dictionary.generateCategory());
             return true;
-       } else if (dictionary.getCategories().contains(input.toLowerCase().trim())) {
+       }
+       if (dictionary.getCategories().contains(input.toLowerCase().trim())) {
            context.setWordCategory(input.toLowerCase().trim());
            return true;
        }
