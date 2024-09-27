@@ -90,22 +90,22 @@ public class GameContextTest {
 
         @Test
         void setAnswerValidArg() {
-            assertDoesNotThrow(()->gameContext.setAnswer("banana"));
+            assertDoesNotThrow(()->gameContext.setAnswer("banana","Long yellow fruit"));
             assertEquals("banana", gameContext.answer());
             assertEquals(6,gameContext.getCurrentAnswer().length);
         }
 
         @Test
         void setAnswerInvalidArg(){
-            assertThatThrownBy(()->gameContext.setAnswer(""))
+            assertThatThrownBy(()->gameContext.setAnswer("",""))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Word can not be empty");
         }
 
         @Test
         void setAnswerWhenAlreadySet(){
-            gameContext.setAnswer("banana");
-            assertThatThrownBy(()->gameContext.setAnswer("apple"))
+            gameContext.setAnswer("banana","Long yellow fruit");
+            assertThatThrownBy(()->gameContext.setAnswer("apple","A round fruit that keeps the doctor away when eaten daily."))
                 .isInstanceOf(FieldAlreadySetException.class)
                 .hasMessage("Can't change context: answer has already been set");
         }
@@ -119,7 +119,7 @@ public class GameContextTest {
         @CsvSource({"b, b_____","B, b_____","a, _a_a_a","A, _a_a_a"})
         public void wordContainsLetter(char letter, String expectedAns) {
 
-            gameContext.setAnswer("banana");
+            gameContext.setAnswer("banana","Long yellow fruit");
             gameContext.setMaxMistakes(10);
            boolean letterProcessed = gameContext.processLetter(letter);
            assertTrue(letterProcessed);
@@ -135,7 +135,7 @@ public class GameContextTest {
         @Test
         public void wordDoesNotContainLetter() {
 
-            gameContext.setAnswer("banana");
+            gameContext.setAnswer("banana","Long yellow fruit");
             gameContext.setMaxMistakes(10);
             boolean letterProcessed = gameContext.processLetter('i');
             assertTrue(letterProcessed);
@@ -150,7 +150,7 @@ public class GameContextTest {
 
         @Test
         public void letterIsAlreadyProcessed() {
-            gameContext.setAnswer("banana");
+            gameContext.setAnswer("banana","Long yellow fruit");
             gameContext.setMaxMistakes(10);
             gameContext.processLetter('a');
             boolean letterProcessed = gameContext.processLetter('a');
@@ -163,7 +163,7 @@ public class GameContextTest {
 
         @BeforeEach
         void fillContext(){
-            gameContext.setAnswer("answer");
+            gameContext.setAnswer("answer","Long yellow fruit");
             gameContext.setMaxMistakes(10);
         }
 

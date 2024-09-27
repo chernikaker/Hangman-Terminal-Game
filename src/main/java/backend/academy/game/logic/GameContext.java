@@ -16,6 +16,8 @@ public class GameContext {
     @Getter
     private String answer = "";
     @Getter
+    private String hint = "";
+    @Getter
     private int maxMistakes = 0;
     @Getter
     private int mistakes = 0;
@@ -32,7 +34,7 @@ public class GameContext {
         this.maxMistakes = mistakes;
     }
 
-    public void setAnswer(String word) {
+    public void setAnswer(String word, String hint) {
         if (word.isEmpty()) {
             throw new IllegalArgumentException("Word can not be empty");
         }
@@ -42,6 +44,7 @@ public class GameContext {
         answer = word;
         currentAnswer = new char[word.length()];
         Arrays.fill(currentAnswer, '_');
+        this.hint = hint;
     }
 
     public void setWordCategory(String category) {

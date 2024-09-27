@@ -1,20 +1,40 @@
 orange 2 fruits
+A round citrus fruit that's juicy and often used for juice.
 mango 2 fruits
+A sweet, tropical fruit with a yellow-orange flesh and a large pit.
 apple 3 fruits
+A round fruit, often red or green, that keeps the doctor away when eaten daily.
 grapefruit 1 fruits
+A large citrus fruit that's tart and often pink or yellow inside.
 pineapple 1 fruits
+A tropical fruit with a spiky exterior and sweet, juicy interior.
 watermelon 1 fruits
+A large, green fruit with a juicy red interior and black seeds, perfect for summer.
 tiger 3 animals
+A big cat known for its orange coat with black stripes.
 horse 3 animals
+A large domesticated animal often used for riding and racing.
 whale 3 animals
+The largest mammal in the ocean, known for its size and songs.
 rabbit 3 animals
+A small furry animal with long ears, often associated with carrots.
 tortoise 2 animals
+A slow-moving reptile with a hard shell that lives both on land and in water.
 dolphin 2 animals
+A highly intelligent marine mammal known for its playful behavior.
 elephant 2 animals
+The largest land animal, known for its trunk and social behavior.
 armadillo 1 animals
+A small mammal with a hard shell, known for rolling into a ball.
 hippopotamus 1 animals
+A large, mostly herbivorous mammal that spends much time in water.
 squirrel 1 animals
+A small rodent with a bushy tail, often found in trees.
 architect 1 professions
+A professional who designs buildings and other structures.
 programmer 1 professions
+A person who writes code to create software applications.
 teacher 2 professions
+An educator who imparts knowledge and skills to students.
 vet 3 professions
+A medical professional who cares for animals and treats their illnesses.

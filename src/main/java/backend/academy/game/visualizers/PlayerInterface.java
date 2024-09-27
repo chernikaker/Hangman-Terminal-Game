@@ -112,7 +112,7 @@ public class PlayerInterface {
         out.print("Enter one of the levels [leave empty to choose random]: ");
     }
 
-    public void viewHangmanScreen(GameContext context, boolean previousInvalidInput) {
+    public void viewHangmanScreen(GameContext context, boolean previousInvalidInput, boolean withHint) {
         clearScreen();
         drawHangman(context);
         out.print("Checked letters: ");
@@ -130,7 +130,12 @@ public class PlayerInterface {
         if (previousInvalidInput) {
             out.println("Error: invalid input, enter one letter, which was not checked. Try again!");
         }
-        out.print("Enter next letter: ");
+        if (!withHint) {
+            out.print("Enter next letter [or enter /hint to get hint]: ");
+        } else {
+            out.println("HINT: "+context.hint());
+            out.print("Enter next letter: ");
+        }
     }
 
     public void viewEndScreen(GameContext context) {

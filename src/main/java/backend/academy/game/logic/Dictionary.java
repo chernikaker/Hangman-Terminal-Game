@@ -52,7 +52,8 @@ public class Dictionary {
                     try {
                         int difficulty = Integer.parseInt(parts[1].trim());
                         String category = parts[2].trim();
-                        addWord(new Word(word, difficulty, category));
+                        String hint = reader.readLine();
+                        addWord(new Word(word, difficulty, category,hint));
                     } catch (NumberFormatException e) {
                         log.warn("Error while parsing difficulty in line: {} Current word skipped", line);
                     } catch (InvalidWordException e) {

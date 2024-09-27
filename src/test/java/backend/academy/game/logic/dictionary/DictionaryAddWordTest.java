@@ -18,7 +18,7 @@ public class DictionaryAddWordTest {
     @Test
     public void NewDifficultyAndCategory() {
 
-        Word word = new Word("pizza", 1, "food");
+        Word word = new Word("pizza", 1, "food", "hint");
         dict.addWord(word);
         assertTrue(dict.containsWord(word));
     }
@@ -26,9 +26,9 @@ public class DictionaryAddWordTest {
     @Test
     public void NewDifficultyPresentCategory() {
 
-        Word word1 = new Word("banana", 1, "fruits");
+        Word word1 = new Word("banana", 1, "fruits", "hint");
         dict.addWord(word1);
-        Word word = new Word("dragonfruit", 5, "fruits");
+        Word word = new Word("dragonfruit", 5, "fruits", "hint");
         dict.addWord(word);
         assertTrue(dict.containsWord(word));
     }
@@ -36,26 +36,26 @@ public class DictionaryAddWordTest {
     @Test
     public void PresentDifficultyAndCategory() {
 
-        Word word1 = new Word("banana", 1, "fruits");
+        Word word1 = new Word("banana", 1, "fruits","hint");
         dict.addWord(word1);
-        Word word = new Word("lemon", 1, "fruits");
+        Word word = new Word("lemon", 1, "fruits","hint");
         dict.addWord(word);
         assertTrue(dict.containsWord(word));
     }
 
     private static Stream<Word> provideDataWrongWord() {
         return Stream.of(
-            new Word("",1,"fruits"),
-            new Word(null,1,"fruits"),
-            new Word("    ",1,"fruits")
+            new Word("",1,"fruits","hint"),
+            new Word(null,1,"fruits","hint"),
+            new Word("    ",1,"fruits","hint")
         );
     }
 
     private static Stream<Word> provideDataWrongCategory() {
         return Stream.of(
-            new Word("banana",1,""),
-            new Word("banana",1,null),
-            new Word("banana",1,"   ")
+            new Word("banana",1,"","hint"),
+            new Word("banana",1,null,"hint"),
+            new Word("banana",1,"   ","hint")
         );
     }
 
@@ -63,7 +63,7 @@ public class DictionaryAddWordTest {
     @CsvSource({"0","6"})
     public void InvalidDifficulty(int difficulty) {
 
-        Word word = new Word("lemon", difficulty, "fruits");
+        Word word = new Word("lemon", difficulty, "fruits","hint");
         assertThatThrownBy(()->dict.addWord(word))
             .isInstanceOf(InvalidWordException.class)
             .hasMessage("Error while adding word: word difficulty must be at least 1 and at most 5");

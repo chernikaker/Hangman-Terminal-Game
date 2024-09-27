@@ -61,7 +61,7 @@ public class GameDifficultySettingState implements GameState {
 
     private void setContext() {
         Word answer = dictionary.getWord(context.wordCategory(), context.wordDifficulty());
-        context.setAnswer(answer.word());
+        context.setAnswer(answer.word(),answer.hint());
         int maxMistakes = HangmanVisualizer.MIN_ATTEMPTS + Dictionary.MAX_DIFFICULTY - context.wordDifficulty();
         context.setMaxMistakes(maxMistakes);
     }

@@ -21,7 +21,7 @@ public class GamePlayingStateTest {
 
         @BeforeEach
         void setUp() {
-            context.setAnswer("a");
+            context.setAnswer("a","hint");
             context.setMaxMistakes(1);
         }
         @Test
@@ -56,7 +56,7 @@ public class GamePlayingStateTest {
 
         @BeforeEach
         void setUp() {
-            context.setAnswer("a");
+            context.setAnswer("a","hint");
             context.setMaxMistakes(1);
         }
 

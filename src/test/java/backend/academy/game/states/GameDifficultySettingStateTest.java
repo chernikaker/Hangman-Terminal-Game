@@ -40,7 +40,7 @@ public class GameDifficultySettingStateTest {
 
         @BeforeEach
         void setUp() {
-            dict.addWord(new Word("banana",1,"fruits"));
+            dict.addWord(new Word("banana",1,"fruits","hint"));
             context.setWordCategory("fruits");
         }
 

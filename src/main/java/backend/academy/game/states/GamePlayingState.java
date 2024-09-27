@@ -8,11 +8,13 @@ public class GamePlayingState implements GameState {
 
     private final GameContext context;
     private boolean error = false;
+    private boolean withHint = false;
     private final InputValidator letterValidator = ((input) ->
-        input != null
-            && !input.isBlank()
-            && input.length() == 1
-            && Character.isAlphabetic(input.charAt(0)));
+            input != null
+            && (!input.isBlank()
+                && input.length() == 1
+                && Character.isAlphabetic(input.charAt(0))
+                || input.trim().equalsIgnoreCase("/hint")));
 
     public GamePlayingState(GameContext ctx) {
         context = ctx;
@@ -20,7 +22,7 @@ public class GamePlayingState implements GameState {
 
     @Override
     public String viewScreen(PlayerInterface playerInterface) {
-        playerInterface.viewHangmanScreen(context, error);
+        playerInterface.viewHangmanScreen(context, error, withHint);
         return playerInterface.getInput();
     }
 
@@ -38,6 +40,10 @@ public class GamePlayingState implements GameState {
     public boolean processInput(String input) {
         if (!letterValidator.validate(input)) {
             return false;
+        }
+        if(input.equalsIgnoreCase("/hint")) {
+            withHint = true;
+            return true;
         }
         return context.processLetter(input.charAt(0));
     }
