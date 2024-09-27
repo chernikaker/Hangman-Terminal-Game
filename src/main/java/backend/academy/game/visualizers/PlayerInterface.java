@@ -133,7 +133,7 @@ public class PlayerInterface {
         if (!withHint) {
             out.print("Enter next letter [or enter /hint to get hint]: ");
         } else {
-            out.println("HINT: "+context.hint());
+            out.println("HINT: " + context.hint());
             out.print("Enter next letter: ");
         }
     }

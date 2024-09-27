@@ -20,7 +20,6 @@ public class Dictionary {
     public static final int MAX_DIFFICULTY = 5;
     private static final int FILE_DATA_PARTS = 3;
     public static final String DICTIONARY_PATH = "src/main/resources/dict/data.txt";
-
     private final Map<String, WordsByDifficultyList> dictionary = new HashMap<>();
     private final SecureRandom random = new SecureRandom();
 
@@ -37,7 +36,7 @@ public class Dictionary {
         if (word.word() == null || word.word().isBlank()) {
             throw new InvalidWordException("word is null or empty");
         }
-        if(word.hint() == null || word.hint().isBlank()) {
+        if (word.hint() == null || word.hint().isBlank()) {
             throw new InvalidWordException("hint is null or empty");
         }
         dictionary
@@ -56,14 +55,14 @@ public class Dictionary {
                     log.warn("Error while parsing hint in line: {}. {}. Current line skipped", line, e.getMessage());
                     continue;
                 }
-                String[] parts = line.substring(0,line.indexOf("(")-1).split(" ");
+                String[] parts = line.substring(0, line.indexOf('(') - 1).split(" ");
 
                 if (parts.length == FILE_DATA_PARTS) {
                     String word = parts[0].trim();
                     try {
                         int difficulty = Integer.parseInt(parts[1].trim());
                         String category = parts[2].trim();
-                        addWord(new Word(word, difficulty, category,hint));
+                        addWord(new Word(word, difficulty, category, hint));
                     } catch (NumberFormatException e) {
                         log.warn("Error while parsing difficulty in line: {} Current word skipped", line);
                     } catch (InvalidWordException e) {
@@ -73,8 +72,7 @@ public class Dictionary {
                     log.warn("Error while parsing line (wrong params): {} Current line skipped", line);
                 }
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new GameException("Error while working with file: " + filename, e);
         }
     }

@@ -6,6 +6,7 @@ import backend.academy.game.visualizers.PlayerInterface;
 
 public class GamePlayingState implements GameState {
 
+    private final static String HINT_COMMAND = "/hint";
     private final GameContext context;
     private boolean error = false;
     private boolean withHint = false;
@@ -14,7 +15,7 @@ public class GamePlayingState implements GameState {
             && (!input.isBlank()
                 && input.length() == 1
                 && Character.isAlphabetic(input.charAt(0))
-                || input.trim().equalsIgnoreCase("/hint")));
+                || HINT_COMMAND.equalsIgnoreCase(input.trim())));
 
     public GamePlayingState(GameContext ctx) {
         context = ctx;
@@ -41,7 +42,7 @@ public class GamePlayingState implements GameState {
         if (!letterValidator.validate(input)) {
             return false;
         }
-        if(input.equalsIgnoreCase("/hint")) {
+        if (HINT_COMMAND.equalsIgnoreCase(input.trim())) {
             withHint = true;
             return true;
         }
