@@ -3,7 +3,6 @@ package backend.academy.game.logic;
 import backend.academy.game.exceptions.GameException;
 import backend.academy.game.exceptions.InvalidWordException;
 import backend.academy.game.exceptions.WordNotFoundException;
-import lombok.extern.slf4j.Slf4j;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Dictionary {
@@ -21,10 +21,15 @@ public class Dictionary {
     private static final int FILE_DATA_PARTS = 3;
     public static final String DICTIONARY_PATH = "src/main/resources/dict/data.txt";
 
-    private final Map<String, Map<Integer, List<Word>>> dictionary = new HashMap<>();
+    private final Map<String, WordsByDifficultyList> dictionary = new HashMap<>();
     private final SecureRandom random = new SecureRandom();
 
     public void addWord(Word word) {
+
+        if (word.category() == null || word.category().isBlank()) {
+            throw new InvalidWordException("category is null or empty");
+        }
+
         if (word.difficulty() < 1 || word.difficulty() > MAX_DIFFICULTY) {
             throw new InvalidWordException(
                 "word difficulty must be at least 1 and at most " + MAX_DIFFICULTY
@@ -35,14 +40,9 @@ public class Dictionary {
             throw new InvalidWordException("word is null or empty");
         }
 
-        if (word.category() == null || word.category().isBlank()) {
-            throw new InvalidWordException("category is null or empty");
-        }
-
         dictionary
-            .computeIfAbsent(word.category(), k -> new HashMap<>())
-            .computeIfAbsent(word.difficulty(), k -> new ArrayList<>())
-            .add(word);
+            .computeIfAbsent(word.category(), k -> new WordsByDifficultyList())
+            .addWord(word);
     }
 
     public void fillDictionaryFromFile(String filename) {
@@ -82,8 +82,8 @@ public class Dictionary {
         if (!dictionary.containsKey(category)) {
             throwNotFoundCategory(category);
         }
-        int difficultyIndex = random.nextInt(dictionary.get(category).size());
-        return (int) dictionary.get(category).keySet().toArray()[difficultyIndex];
+        int difficultyIndex = random.nextInt(dictionary.get(category).getDifficulties().size());
+        return (int) dictionary.get(category).getDifficulties().toArray()[difficultyIndex];
     }
 
     public Word getWord(String category, int difficulty) {
@@ -91,12 +91,9 @@ public class Dictionary {
         if (!dictionary.containsKey(category)) {
             throwNotFoundCategory(category);
         }
-        if (!dictionary.get(category).containsKey(difficulty)) {
-            throw new WordNotFoundException(
-                "difficulty " + difficulty + " does not exist in category " + category);
-        }
-        int wordIndex = random.nextInt(dictionary.get(category).get(difficulty).size());
-        return dictionary.get(category).get(difficulty).get(wordIndex);
+
+        int wordIndex = random.nextInt(dictionary.get(category).getWords(difficulty).size());
+        return dictionary.get(category).getWords(difficulty).get(wordIndex);
     }
 
     public List<String> getCategories() {
@@ -107,13 +104,12 @@ public class Dictionary {
         if (!dictionary.containsKey(category)) {
             throwNotFoundCategory(category);
         }
-        return new ArrayList<>(dictionary.get(category).keySet());
+        return dictionary.get(category).getDifficulties();
     }
 
     public boolean containsWord(Word word) {
         return dictionary.containsKey(word.category())
-            && dictionary.get(word.category()).containsKey(word.difficulty())
-            && dictionary.get(word.category()).get(word.difficulty()).contains(word);
+            && dictionary.get(word.category()).containsWord(word);
     }
 
     private void throwNotFoundCategory(String category) {

@@ -1,6 +1,7 @@
 package backend.academy.game.logic.dictionary;
 
 import backend.academy.game.logic.Dictionary;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -8,7 +9,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FillDictionaryFromFileTest {
 
-    private static final Dictionary dict = new Dictionary();
+    private static Dictionary dict;
+
+    @BeforeEach
+    public void setUp() {
+        dict = new Dictionary();
+    }
 
     @Test
     public void allCorrectData(){
@@ -48,6 +54,7 @@ public class FillDictionaryFromFileTest {
     public void addWordException(){
         assertDoesNotThrow(()
             ->dict.fillDictionaryFromFile("src/test/resources/dict/addWordExceptionData.txt"));
+
         assertEquals(dict.getCategories().size(),0);
     }
 }

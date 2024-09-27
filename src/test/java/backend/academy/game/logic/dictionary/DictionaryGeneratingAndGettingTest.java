@@ -19,134 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DictionaryGeneratingAndGettingTest {
 
-    @Nested
-    class FillDictionaryFromFileTest{
-
-        private static final Dictionary dict = new Dictionary();
-
-        @Test
-        public void allCorrectData(){
-            assertDoesNotThrow(()->dict.fillDictionaryFromFile("src/test/resources/dict/defaultTestData.txt"));
-            assertEquals(dict.getCategories().size(),3);
-            assertDoesNotThrow(()->dict.getDifficulties("fruits"));
-            assertDoesNotThrow(()->dict.getDifficulties("animals"));
-            assertDoesNotThrow(()->dict.getDifficulties("professions"));
-            assertEquals(dict.getDifficulties("fruits").size(),3);
-            assertEquals(dict.getDifficulties("animals").size(),3);
-            assertEquals(dict.getDifficulties("professions").size(),3);
-        }
-
-        @Test
-        public void wrongPath(){
-            assertThatThrownBy(()->dict.fillDictionaryFromFile("wrongFile.txt"))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessage("Error while working with file: wrongFile.txt");
-
-        }
-
-        @Test
-        public void wrongNumberOfParamsInLine(){
-            assertDoesNotThrow(()
-                ->dict.fillDictionaryFromFile("src/test/resources/dict/wrongWordsFormatData.txt"));
-            assertEquals(dict.getCategories().size(),0);
-        }
-
-        @Test
-        public void invalidDifficulty(){
-            assertDoesNotThrow(()
-                ->dict.fillDictionaryFromFile("src/test/resources/dict/cantParseDifficultyData.txt"));
-            assertEquals(dict.getCategories().size(),0);
-        }
-
-        @Test
-        public void addWordException(){
-            assertDoesNotThrow(()
-                ->dict.fillDictionaryFromFile("src/test/resources/dict/addWordExceptionData.txt"));
-            assertEquals(dict.getCategories().size(),0);
-        }
-    }
-
-
-    @Nested
-    class AddWordTests {
-
-        private static final Dictionary dict = new Dictionary();
-
-        @Test
-        public void NewDifficultyAndCategory() {
-
-            Word word = new Word("pizza", 1, "food");
-            dict.addWord(word);
-            assertTrue(dict.containsWord(word));
-        }
-
-        @Test
-        public void NewDifficultyPresentCategory() {
-
-            Word word1 = new Word("banana", 1, "fruits");
-            dict.addWord(word1);
-            Word word = new Word("dragonfruit", 5, "fruits");
-            dict.addWord(word);
-            assertTrue(dict.containsWord(word));
-        }
-
-        @Test
-        public void PresentDifficultyAndCategory() {
-
-            Word word1 = new Word("banana", 1, "fruits");
-            dict.addWord(word1);
-            Word word = new Word("lemon", 1, "fruits");
-            dict.addWord(word);
-            assertTrue(dict.containsWord(word));
-        }
-
-        private static Stream<Word> provideDataWrongWord() {
-            return Stream.of(
-                new Word("",1,"fruits"),
-                new Word(null,1,"fruits"),
-                new Word("    ",1,"fruits")
-            );
-        }
-
-        private static Stream<Word> provideDataWrongCategory() {
-            return Stream.of(
-                new Word("banana",1,""),
-                new Word("banana",1,null),
-                new Word("banana",1,"   ")
-            );
-        }
-
-        @ParameterizedTest
-        @CsvSource({"0","6"})
-        public void InvalidDifficulty(int difficulty) {
-
-            Word word = new Word("lemon", difficulty, "fruits");
-            assertThatThrownBy(()->dict.addWord(word))
-                .isInstanceOf(InvalidWordException.class)
-                .hasMessage("Error while adding word: word difficulty must be at least 1 and at most 5");
-        }
-
-        @ParameterizedTest
-        @MethodSource("provideDataWrongWord")
-        public void InvalidWord(Word word) {
-
-            assertThatThrownBy(()->dict.addWord(word))
-                .isInstanceOf(InvalidWordException.class)
-                .hasMessage("Error while adding word: word is null or empty");
-        }
-
-        @ParameterizedTest
-        @MethodSource("provideDataWrongCategory")
-        public void InvalidCategory(Word word) {
-
-            assertThatThrownBy(()->dict.addWord(word))
-                .isInstanceOf(InvalidWordException.class)
-                .hasMessage("Error while adding word: category is null or empty");
-        }
-    }
-
-    @Nested
-    class GetWordGeneratingTests {
 
         private static final Dictionary dict = new Dictionary();
 
@@ -173,7 +45,7 @@ public class DictionaryGeneratingAndGettingTest {
         public void IncorrectDifficulty() {
             assertThatThrownBy(()->dict.getWord("fruits",5))
                 .isInstanceOf(WordNotFoundException.class)
-                .hasMessage("Word can not be found: difficulty 5 does not exist in category fruits");
+                .hasMessage("Word can not be found: difficulty 5 does not exist");
         }
 
         @Test
@@ -208,8 +80,5 @@ public class DictionaryGeneratingAndGettingTest {
             Word word = assertDoesNotThrow(()->dict.getWord(category,difficulty));
             assertTrue(dict.containsWord(word));
         }
-
-    }
-
 
 }
