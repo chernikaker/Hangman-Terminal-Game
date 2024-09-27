@@ -22,7 +22,6 @@ public class GameStartState implements GameState {
 
     @Override
     public GameState changeState(boolean inputProcessed) {
-
         return new GameCategorySettingState(dictionary, context);
     }
 
@@ -30,5 +29,4 @@ public class GameStartState implements GameState {
     public boolean processInput(String input) {
         return true;
     }
-
 }

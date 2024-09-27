@@ -19,10 +19,8 @@ public class PlayerInterface {
 
     private final PrintStream out;
     private final Scanner scanner;
-
     private final HangmanVisualizer visualizer = new HangmanVisualizer();
     private Terminal terminal = null;
-
 
     public PlayerInterface(PrintStream out, InputStream in) {
         this.out = out;
@@ -57,7 +55,6 @@ public class PlayerInterface {
                         ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗
                          ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝""");
         out.println("               [Press Enter to continue]");
-
     }
 
     public void viewSettingCategoryScreen(List<String> categories, boolean previousInvalidInput) {
@@ -69,7 +66,6 @@ public class PlayerInterface {
             ║ ▀▀▀ ▀ ▀ ▀▀▀ ▀▀▀ ▀▀▀ ▀▀▀   ▀▀▀ ▀ ▀  ▀  ▀▀▀ ▀▀▀ ▀▀▀ ▀ ▀  ▀  ║
             ╚═══════════════════════════════════════════════════════════╝
             """);
-
         for (int i = 0; i < categories.size(); i++) {
             out.printf("%-25s", categories.get(i).toUpperCase());
             if ((i + 1) % CATEGORY_COLUMNS == 0) {
@@ -99,7 +95,6 @@ public class PlayerInterface {
             ║                       ▀▀▀ ▀▀▀  ▀  ▀▀▀ ▀▀▀                         ║
             ╚═══════════════════════════════════════════════════════════════════╝
             """);
-
         for (int i = 0; i < difficulties.size(); i++) {
             out.printf("%-15s", difficulties.get(i));
             if ((i + 1) % DIFFICULTY_COLUMNS == 0) {
@@ -109,30 +104,24 @@ public class PlayerInterface {
         if (difficulties.size() % DIFFICULTY_COLUMNS != 0) {
             out.println();
         }
-
         out.println("═════════════════════════════════════════════════════════════════════");
         out.println();
         if (previousInvalidInput) {
             out.println("Error: no such difficulty level");
         }
         out.print("Enter one of the levels [leave empty to choose random]: ");
-
     }
-
 
     public void viewHangmanScreen(GameContext context, boolean previousInvalidInput) {
         clearScreen();
         drawHangman(context);
-
         out.print("Checked letters: ");
         for (char c : context.getProcessedLetters()) {
             out.print(c + " ");
         }
         out.println();
-
         out.println("Remaining attempts: " + (context.maxMistakes() - context.mistakes()));
         out.println();
-
         out.println("CURRENT ANSWER");
         for (char c : context.getCurrentAnswer()) {
             out.print(c);

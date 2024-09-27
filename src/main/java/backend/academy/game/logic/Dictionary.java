@@ -29,17 +29,14 @@ public class Dictionary {
         if (word.category() == null || word.category().isBlank()) {
             throw new InvalidWordException("category is null or empty");
         }
-
         if (word.difficulty() < 1 || word.difficulty() > MAX_DIFFICULTY) {
             throw new InvalidWordException(
                 "word difficulty must be at least 1 and at most " + MAX_DIFFICULTY
             );
         }
-
         if (word.word() == null || word.word().isBlank()) {
             throw new InvalidWordException("word is null or empty");
         }
-
         dictionary
             .computeIfAbsent(word.category(), k -> new WordsByDifficultyList())
             .addWord(word);
@@ -48,9 +45,7 @@ public class Dictionary {
     public void fillDictionaryFromFile(String filename) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename, StandardCharsets.UTF_8))) {
             String line;
-
             while ((line = reader.readLine()) != null) {
-
                 String[] parts = line.split(" ");
                 if (parts.length == FILE_DATA_PARTS) {
                     String word = parts[0].trim();
@@ -78,7 +73,6 @@ public class Dictionary {
     }
 
     public int generateDifficulty(String category) {
-
         if (!dictionary.containsKey(category)) {
             throwNotFoundCategory(category);
         }
@@ -87,11 +81,9 @@ public class Dictionary {
     }
 
     public Word getWord(String category, int difficulty) {
-
         if (!dictionary.containsKey(category)) {
             throwNotFoundCategory(category);
         }
-
         int wordIndex = random.nextInt(dictionary.get(category).getWords(difficulty).size());
         return dictionary.get(category).getWords(difficulty).get(wordIndex);
     }
@@ -115,6 +107,4 @@ public class Dictionary {
     private void throwNotFoundCategory(String category) {
         throw new WordNotFoundException("category " + category + " does not exist");
     }
-
-
 }

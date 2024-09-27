@@ -11,7 +11,6 @@ public class WordsByDifficultyList {
     private final Map<Integer, List<Word>> wordsByDifficulty = new HashMap<>();
 
     public void addWord(Word word) {
-
         wordsByDifficulty
             .computeIfAbsent(word.difficulty(), k -> new ArrayList<>())
             .add(word);

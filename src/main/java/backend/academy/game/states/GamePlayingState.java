@@ -8,13 +8,11 @@ public class GamePlayingState implements GameState {
 
     private final GameContext context;
     private boolean error = false;
-
     private final InputValidator letterValidator = ((input) ->
         input != null
             && !input.isBlank()
             && input.length() == 1
             && Character.isAlphabetic(input.charAt(0)));
-
 
     public GamePlayingState(GameContext ctx) {
         context = ctx;
@@ -28,7 +26,6 @@ public class GamePlayingState implements GameState {
 
     @Override
     public GameState changeState(boolean inputProcessed) {
-
         if (context.mistakes() == context.maxMistakes()
             || context.answer().equals(new String(context.getCurrentAnswer()))) {
             return new GameEndState(context);
@@ -42,7 +39,6 @@ public class GamePlayingState implements GameState {
         if (!letterValidator.validate(input)) {
             return false;
         }
-
         return context.processLetter(input.charAt(0));
     }
 }

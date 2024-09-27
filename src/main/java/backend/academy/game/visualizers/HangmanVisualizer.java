@@ -37,7 +37,6 @@ public class HangmanVisualizer {
     );
 
     public String getPart(int part) {
-
         if (part < 0 || part >= PARTS.size()) {
             throw new IllegalArgumentException("Part number is out of range");
         }
@@ -53,5 +52,4 @@ public class HangmanVisualizer {
             default -> throw new IllegalArgumentException("Invalid part number");
         };
     }
-
 }

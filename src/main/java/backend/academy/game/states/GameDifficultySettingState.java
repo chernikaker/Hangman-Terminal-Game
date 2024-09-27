@@ -3,7 +3,6 @@ package backend.academy.game.states;
 import backend.academy.game.logic.Dictionary;
 import backend.academy.game.logic.GameContext;
 import backend.academy.game.logic.Word;
-import backend.academy.game.logic.WordsByDifficultyList;
 import backend.academy.game.validators.InputValidator;
 import backend.academy.game.visualizers.HangmanVisualizer;
 import backend.academy.game.visualizers.PlayerInterface;
@@ -13,7 +12,6 @@ public class GameDifficultySettingState implements GameState {
     private final Dictionary dictionary;
     private final GameContext context;
     private boolean error = false;
-
     private final InputValidator difficultyValidator;
 
     public GameDifficultySettingState(Dictionary d, GameContext ctx) {
@@ -37,7 +35,6 @@ public class GameDifficultySettingState implements GameState {
 
     @Override
     public GameState changeState(boolean inputProcessed) {
-
         if (inputProcessed) {
             return new GamePlayingState(context);
         } else {
@@ -54,7 +51,6 @@ public class GameDifficultySettingState implements GameState {
         int difficulty = input.isBlank()
             ? dictionary.generateDifficulty(context.wordCategory())
             : Integer.parseInt(input);
-
         if (dictionary.getDifficulties(context.wordCategory()).contains(difficulty)) {
             context.setWordDifficulty(difficulty);
             setContext();

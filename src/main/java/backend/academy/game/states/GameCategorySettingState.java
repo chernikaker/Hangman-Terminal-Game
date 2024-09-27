@@ -11,9 +11,7 @@ public class GameCategorySettingState implements GameState {
     private final Dictionary dictionary;
     private final GameContext context;
     private boolean error = false;
-
     private final InputValidator categoryValidator = (Objects::nonNull);
-
 
     public GameCategorySettingState(Dictionary d, GameContext ctx) {
         dictionary = d;
@@ -28,7 +26,6 @@ public class GameCategorySettingState implements GameState {
 
     @Override
     public GameState changeState(boolean inputProcessed) {
-
         if (inputProcessed) {
             return new GameDifficultySettingState(dictionary, context);
         } else {
@@ -42,7 +39,6 @@ public class GameCategorySettingState implements GameState {
        if (!categoryValidator.validate(input)) {
            return false;
        }
-
        if (input.isBlank()) {
             context.setWordCategory(dictionary.generateCategory());
             return true;

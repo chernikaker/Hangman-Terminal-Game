@@ -9,6 +9,4 @@ public interface GameState {
     GameState changeState(boolean inputProcessed);
 
     boolean processInput(String input);
-
-
 }

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 import lombok.Getter;
 
-
 public class GameContext {
 
     @Getter
@@ -20,10 +19,8 @@ public class GameContext {
     private int maxMistakes = 0;
     @Getter
     private int mistakes = 0;
-
     private char[] currentAnswer = new char[maxMistakes];
     private final Set<Character> processedLetters = new HashSet<>();
-
 
     public void setMaxMistakes(int mistakes) {
         if (mistakes < 1) {
@@ -76,7 +73,6 @@ public class GameContext {
     }
 
     public boolean processLetter(char letter) {
-
         String ans = String.valueOf(answer);
         char exactLetter = Character.toLowerCase(letter);
         if (processedLetters.contains(exactLetter)) {
