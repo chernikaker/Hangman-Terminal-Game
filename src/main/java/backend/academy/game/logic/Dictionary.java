@@ -17,6 +17,7 @@ public class Dictionary {
 
     public static final int MAX_DIFFICULTY = 5;
     private static final int FILE_DATA_PARTS = 3;
+    public static final String DICTIONARY_PATH = "src/main/resources/dict/data.txt";
 
     private final Map<String, Map<Integer, List<Word>>> dictionary = new HashMap<>();
     private final SecureRandom random = new SecureRandom();

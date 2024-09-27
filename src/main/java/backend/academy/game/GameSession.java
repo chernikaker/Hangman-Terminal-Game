@@ -10,13 +10,10 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import lombok.Getter;
 
-
-
 @Getter
 public class GameSession {
 
-    @SuppressWarnings("staticvariablename")
-    private static long NEXT_ID = 0L;
+    private static long nextId = 0L;
     private final long id;
     private final GameContext context = new GameContext();
     private final Dictionary dictionary = new Dictionary();
@@ -25,7 +22,7 @@ public class GameSession {
 
     public GameSession(InputStream in, PrintStream out) {
         id = getNextId();
-        dictionary.fillDictionaryFromFile("src/main/resources/dict/data.txt");
+        dictionary.fillDictionaryFromFile(Dictionary.DICTIONARY_PATH);
         playerInterface = new PlayerInterface(out, in);
         playerInterface.createTerminal();
         state = new GameStartState(dictionary, context);
@@ -41,6 +38,6 @@ public class GameSession {
     }
 
     private static synchronized long getNextId() {
-        return NEXT_ID++;
+        return nextId++;
     }
 }

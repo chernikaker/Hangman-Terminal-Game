@@ -8,13 +8,12 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 public class GameStartStateTest {
 
-     GameState gameState = new GameStartState(new Dictionary(),new GameContext());
+    GameState gameState = new GameStartState(new Dictionary(),new GameContext());
 
-     @ParameterizedTest
-     @CsvSource({"true","false"})
+    @ParameterizedTest
+    @CsvSource({"true","false"})
     public void stateChanging(boolean processed){
          gameState = gameState.changeState(processed);
          assertSame(gameState.getClass(), GameCategorySettingState.class);
      }
-
 }

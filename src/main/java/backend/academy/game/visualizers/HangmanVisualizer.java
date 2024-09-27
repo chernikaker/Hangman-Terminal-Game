@@ -6,6 +6,8 @@ public class HangmanVisualizer {
 
     public static final int MIN_ATTEMPTS = 7;
     public static final int HANGMAN_STEPS = 6;
+    public static final int STEPS_NOT_CHANGING_HEIGHT = 3;
+
     private final List<String> parts = List.of(
         "█",
 

@@ -12,8 +12,10 @@ import org.jline.terminal.TerminalBuilder;
 import static backend.academy.game.visualizers.HangmanVisualizer.HANGMAN_STEPS;
 
 @Slf4j
-@SuppressWarnings("magicnumber")
 public class PlayerInterface {
+
+    private final static int DIFFICULTY_COLUMNS = 5;
+    private final static int CATEGORY_COLUMNS = 5;
 
     private final PrintStream out;
     private final Scanner scanner;
@@ -48,12 +50,12 @@ public class PlayerInterface {
             ██╔══██║██╔══██║██║╚██╗██║██║   ██║██║╚██╔╝██║██╔══██║██║╚██╗██║
             ██║  ██║██║  ██║██║ ╚████║╚██████╔╝██║ ╚═╝ ██║██║  ██║██║ ╚████║
             ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝
-                         ██████╗  █████╗ ███╗   ███╗███████╗               \s
-                        ██╔════╝ ██╔══██╗████╗ ████║██╔════╝               \s
-                        ██║  ███╗███████║██╔████╔██║█████╗                 \s
-                        ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝                 \s
-                        ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗               \s
-                         ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝               \s""");
+                         ██████╗  █████╗ ███╗   ███╗███████╗
+                        ██╔════╝ ██╔══██╗████╗ ████║██╔════╝
+                        ██║  ███╗███████║██╔████╔██║█████╗
+                        ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝
+                        ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗
+                         ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝""");
         out.println("               [Press Enter to continue]");
 
     }
@@ -68,14 +70,13 @@ public class PlayerInterface {
             ╚═══════════════════════════════════════════════════════════╝
             """);
 
-        int categoryColumns = 3;
         for (int i = 0; i < categories.size(); i++) {
             out.printf("%-25s", categories.get(i).toUpperCase());
-            if ((i + 1) % categoryColumns == 0) {
+            if ((i + 1) % CATEGORY_COLUMNS == 0) {
                 out.println();
             }
         }
-        if (categories.size() % categoryColumns != 0) {
+        if (categories.size() % CATEGORY_COLUMNS != 0) {
             out.println();
         }
         out.println("═══════════════════════════════════════════════════════════");
@@ -99,14 +100,13 @@ public class PlayerInterface {
             ╚═══════════════════════════════════════════════════════════════════╝
             """);
 
-        int difficultyColumns = 5;
         for (int i = 0; i < difficulties.size(); i++) {
             out.printf("%-15s", difficulties.get(i));
-            if ((i + 1) % difficultyColumns == 0) {
+            if ((i + 1) % DIFFICULTY_COLUMNS == 0) {
                 out.println();
             }
         }
-        if (difficulties.size() % difficultyColumns != 0) {
+        if (difficulties.size() % DIFFICULTY_COLUMNS != 0) {
             out.println();
         }
 
@@ -174,7 +174,10 @@ public class PlayerInterface {
             out.println("█     |");
         }
         out.println(visualizer.getPart(hangmanCount));
-        int remainingHeight = context.maxMistakes() - 3 - ropeCount - visualizer.getHeight(hangmanCount);
+        int remainingHeight = context.maxMistakes()
+            - HangmanVisualizer.STEPS_NOT_CHANGING_HEIGHT
+            - ropeCount
+            - visualizer.getHeight(hangmanCount);
         for (int i = 0; i < remainingHeight + 1; i++) {
             out.println('█');
         }

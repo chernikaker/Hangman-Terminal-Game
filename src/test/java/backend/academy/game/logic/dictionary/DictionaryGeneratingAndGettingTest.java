@@ -1,7 +1,9 @@
-package backend.academy.game.logic;
+package backend.academy.game.logic.dictionary;
 
 import backend.academy.game.exceptions.InvalidWordException;
 import backend.academy.game.exceptions.WordNotFoundException;
+import backend.academy.game.logic.Dictionary;
+import backend.academy.game.logic.Word;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.RepeatedTest;
@@ -15,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DictionaryTest {
+public class DictionaryGeneratingAndGettingTest {
 
     @Nested
     class FillDictionaryFromFileTest{
