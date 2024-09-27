@@ -92,14 +92,22 @@ public class GameContextTest {
         void setAnswerValidArg() {
             assertDoesNotThrow(()->gameContext.setAnswer("banana","Long yellow fruit"));
             assertEquals("banana", gameContext.answer());
+            assertEquals("Long yellow fruit", gameContext.hint());
             assertEquals(6,gameContext.getCurrentAnswer().length);
         }
 
         @Test
-        void setAnswerInvalidArg(){
-            assertThatThrownBy(()->gameContext.setAnswer("",""))
+        void setAnswerInvalidWord(){
+            assertThatThrownBy(()->gameContext.setAnswer("","hint"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Word can not be empty");
+        }
+
+        @Test
+        void setAnswerInvalidHint(){
+            assertThatThrownBy(()->gameContext.setAnswer("word",""))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Hint can not be empty");
         }
 
         @Test

@@ -59,6 +59,14 @@ public class DictionaryAddWordTest {
         );
     }
 
+    private static Stream<Word> provideDataWrongHint() {
+        return Stream.of(
+            new Word("banana",1,"fruits",""),
+            new Word("banana",1,"fruits",null),
+            new Word("banana",1,"fruits","   ")
+        );
+    }
+
     @ParameterizedTest
     @CsvSource({"0","6"})
     public void InvalidDifficulty(int difficulty) {
@@ -85,5 +93,14 @@ public class DictionaryAddWordTest {
         assertThatThrownBy(()->dict.addWord(word))
             .isInstanceOf(InvalidWordException.class)
             .hasMessage("Error while adding word: category is null or empty");
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideDataWrongHint")
+    public void InvalidHint(Word word) {
+
+        assertThatThrownBy(()->dict.addWord(word))
+            .isInstanceOf(InvalidWordException.class)
+            .hasMessage("Error while adding word: hint is null or empty");
     }
 }

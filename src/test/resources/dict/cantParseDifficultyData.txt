@@ -1,2 +1,2 @@
-banana level1 fruits
-apple level2 fruits
+banana level1 fruits (hint)
+apple level2 fruits (hint)

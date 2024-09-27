@@ -1,1 +1,3 @@
-banana 0 fruits
+banana 0 fruits (hint)
+banana 1 fruits ()
+banana 1 fruits (   )

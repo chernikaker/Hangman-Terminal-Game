@@ -38,6 +38,9 @@ public class GameContext {
         if (word.isEmpty()) {
             throw new IllegalArgumentException("Word can not be empty");
         }
+        if (hint.isEmpty()) {
+            throw new IllegalArgumentException("Hint can not be empty");
+        }
         if (!answer.isEmpty()) {
             throw new FieldAlreadySetException("answer has already been set");
         }
